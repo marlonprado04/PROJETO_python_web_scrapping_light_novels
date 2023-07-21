@@ -57,3 +57,4 @@ O agrupamento no site __Central Novel__ respeita a ordem original da obra, confo
 - [ ] Adicionar quebra de linha nos parágrafos
 - [ ] Adaptar nome dos arquivos para ordenação "009, 099, 999"
 - [ ] Refatorar código para baixar capítulos intermediários (14-5, 221-5)
+- [ ] Criar arquivo alternativo no formato .py para poder editar e executar com mais facilidade 
