@@ -44,3 +44,8 @@ Agrupamento no site __Central Novel__:
 - Volume 9 = 314 ao 381 (+374.5)
 - Volume 10 = 382 ao 429
 - Volume 11 = 330 ao 439
+
+# Próximas etapas 
+
+- [ ] Adicionar quebra de linha nos parágrafos
+- [ ] Adaptar nome dos arquivos para ordenação "009, 099, 999"
