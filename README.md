@@ -1,16 +1,16 @@
 # Web Scrapping TBATE
 
-Repositório destinado a realizar Web Scrapping da light novel The Beginning After The End
+Repositório destinado a realizar Web Scrapping da light novel The Beginning After The End.
 
 ## Site usado
 
-Na primeira versão do código o site utilizado para scrapping foi o [Reaper Scans](https://reaperscans.net/series/o-comeco-apos-o-fim-novel), mas após algumas alterações no layout e novas descobertas, este site foi substituído pelo [Central Novel](https://centralnovel.com/series/the-beginning-after-the-end/), por conter mais estabilidade e os dados estarem melhor estruturados.
+Na primeira versão do código o site utilizado para scrapping foi o [Reaper Scans](https://reaperscans.net/series/o-comeco-apos-o-fim-novel), mas após algumas alterações no layout do site resolvi substituí-lo pelo [Central Novel](https://centralnovel.com/series/the-beginning-after-the-end/) já que este contém mais estabilidade e os dados estão melhor estruturados.
 
 ## Sobre o projeto
 
 O projeto é realizado em __Python__, através do VSCode com extensões que permitem trabalhar com arquivos `.ipynb`, mas pode ser compilado no __Google Colaboratory__ ou adaptado para um script Python convencional.
 
-### Bibliotecas e versões
+## Bibliotecas e versões
 
 Para que o código funcione é necessário ter instalado e importado as bibliotecas `requests` e `BeautifulSoulp` da `bs4`.
 
@@ -20,17 +20,21 @@ As versões utilizadas foram:
 - `BeautifulSoup` => 4.12.2
 - `requests` => 2.31.0
 
-### URL utilizadas para realizar a raspagem de dados
+## URL utilizadas
+
+Abaixo as 2 URLs utilizadas na raspagem de dados deste projeto:
 
 ReaperScans: <https://reaperscans.com.br/obra/o-comeco-apos-o-fim/>
 
 Central Novel: <https://centralnovel.com/series/the-beginning-after-the-end/>
 
-### Ordem de capítulos e livros do TBATE
+## Ordem de capítulos e livros do TBATE
 
-<https://tbate.fandom.com/wiki/Volumes_and_Chapters>
 
-Agrupamento no site __Central Novel__:
+
+[Neste site](https://tbate.fandom.com/wiki/Volumes_and_Chapters) encontramos a listagem de capítulos e volumes da obra para tomarmos como base.
+
+O agrupamento no site __Central Novel__ respeita a ordem original da obra, conforme relação abaixo:
 
 - Volume 1 = 1 ao 21
   - 14.5
@@ -48,7 +52,7 @@ Agrupamento no site __Central Novel__:
 - Volume 10 = 382 ao 429
 - Volume 11 = 330 ao 439
 
-# Próximas etapas 
+## Próximas etapas 
 
 - [ ] Adicionar quebra de linha nos parágrafos
 - [ ] Adaptar nome dos arquivos para ordenação "009, 099, 999"
