@@ -33,18 +33,18 @@ Central Novel: <https://centralnovel.com/series/the-beginning-after-the-end/>
 Agrupamento no site __Central Novel__:
 
 - Volume 1 = 1 ao 21
- - 14.5
+  - 14.5
 - Volume 2 = 22 ao 42
 - Volume 3 = 43 ao 68
 - Volume 4 = 69 ao 97
 - Volume 5 = 98 ao 138
 - Volume 6 = 139 ao 194
 - Volume 7 = 195 ao 249
- - 221.5, 223.5, 230.5, 233.5
+  - 221.5, 223.5, 230.5, 233.5
 - Volume 8 = 250 ao 313
 - Volume 8.5 (extra) = 1 ao 20
 - Volume 9 = 314 ao 381
- - 374.5
+  - 374.5
 - Volume 10 = 382 ao 429
 - Volume 11 = 330 ao 439
 
