@@ -4,7 +4,9 @@ Repositório destinado a realizar Web Scrapping da light novel The Beginning Aft
 
 ## Sobre o projeto
 
-O projeto é realizado em __Python__, através do VSCode com extensões que permitem trabalhar com arquivos `.ipynb`, mas pode ser compilado no __Google Colaboratory__ ou adaptado para um script Python convencional.
+O projeto é realizado em __Python__, através do VSCode com extensões que permitem trabalhar com arquivos `.ipynb`, mas pode ser compilado no __Google Colaboratory__ ou o próprio __Jupiter Notebook__.
+
+Também há uma versão alternativa feita em `.py` que pode ser executado em qualquer máquina com __Python__ instalado.
 
 ## Site usado
 
@@ -53,6 +55,7 @@ O agrupamento no site __Central Novel__ respeita a ordem original da obra, confo
 ## Próximas etapas
 
 - [x] Adicionar quebra de linha nos parágrafos
-- [ ] Adaptar nome dos arquivos para ordenação "009, 099, 999"
+- [x] Adaptar nome dos arquivos para ordenação "009, 099, 999"
 - [ ] Refatorar código para baixar capítulos intermediários (14-5, 221-5)
 - [x] Criar arquivo alternativo no formato .py para poder editar e executar com mais facilidade
+- [x] Refatorar código para receber caminho de download informado pelo usuário
