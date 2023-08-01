@@ -56,4 +56,4 @@ O agrupamento no site __Central Novel__ respeita a ordem original da obra, confo
 - [x] Adaptar nome dos arquivos para ordenação "009, 099, 999"
 - [x] Criar arquivo alternativo no formato .py para poder editar e executar com mais facilidade
 - [x] Refatorar código para receber caminho de download informado pelo usuário
-- [ ] Refatorar código para baixar capítulos intermediários (ex: 14-5, 221-5)
+- [x] Refatorar código para baixar capítulos intermediários (ex: 14-5, 221-5)
