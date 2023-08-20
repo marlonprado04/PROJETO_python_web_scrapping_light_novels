@@ -1,6 +1,6 @@
 # Web Scrapping da Light Novel "The Beginning After The End" (TBATE)
 
-Este repositório contém os arquivos relacionados ao projeto de Web Scrapping da light novel "The Beginning After The End" (TBATE).
+Este repositório contém os arquivos relacionados ao projeto de Web Scrapping da light novel The Beginning After The End (TBATE).
 
 ## Índice
 
@@ -9,7 +9,7 @@ Este repositório contém os arquivos relacionados ao projeto de Web Scrapping d
   - [Tecnologias Utilizadas](#tecnologias-utilizadas)
   - [Fontes de Dados](#fontes-de-dados)
   - [Estrutura de Capítulos e Volumes](#estrutura-de-capítulos-e-volumes)
-- [Próximas Etapas](#próximas-etapas)
+- [Próximas etapas do projeto](#próximas-etapas-do-projeto)
 - [Instruções de Execução](#instruções-de-execução)
 
 
@@ -17,11 +17,15 @@ Este repositório contém os arquivos relacionados ao projeto de Web Scrapping d
 
 ### Visão Geral
 
-Este projeto, implementado em **Python**, visa realizar Web Scraping da light novel "The Beginning After The End". O código pode ser executado no **VSCode** com extensões para trabalhar com arquivos `.ipynb`, no **Google Colaboratory** ou no **Jupyter Notebook**. Também há uma versão alternativa em `.py` que é executável em qualquer máquina com **Python** instalado.
+Este projeto, implementado em **Python**, visa realizar Web Scraping da light novel "The Beginning After The End". 
+
+O código pode ser executado no **VSCode** com extensões para trabalhar com arquivos `.ipynb`, no **Google Colaboratory** ou no **Jupyter Notebook**. 
+
+Também há uma versão alternativa em `.py` que é executável em qualquer máquina com **Python 3** instalado.
 
 ### Tecnologias Utilizadas
 
-As principais tecnologias utilizadas neste projeto incluem:
+As principais tecnologias utilizadas neste projeto são:
 
 - **Python 3.10.2**
 - **Beautiful Soup 4.12.2** para o parsing HTML
@@ -29,11 +33,13 @@ As principais tecnologias utilizadas neste projeto incluem:
 
 ### Fontes de Dados
 
-Inicialmente, o site usado para o scraping foi o [Reaper Scans](https://reaperscans.net/series/o-comeco-apos-o-fim-novel). No entanto, devido a alterações no layout, o [Central Novel](https://centralnovel.com/series/the-beginning-after-the-end/) foi escolhido pela sua estabilidade e melhor estruturação dos dados.
+Inicialmente, o site usado para o scrapping foi o [Reaper Scans](https://reaperscans.net/series/o-comeco-apos-o-fim-novel). No entanto, devido a alterações no layout, o [Central Novel](https://centralnovel.com/series/the-beginning-after-the-end/) foi escolhido pela sua estabilidade e melhor estruturação dos dados.
 
 ### Estrutura de Capítulos e Volumes
 
-A estrutura dos capítulos e volumes da obra pode ser encontrada no [site](https://tbate.fandom.com/wiki/Volumes_and_Chapters) e no site [Central Novel](https://centralnovel.com/series/the-beginning-after-the-end/), seguindo a ordem original da obra.
+A estrutura dos capítulos e volumes da obra pode ser encontrada  [neste site](https://tbate.fandom.com/wiki/Volumes_and_Chapters) e no próprio site da [Central Novel](https://centralnovel.com/series/the-beginning-after-the-end/), que visa seguir a ordem original da obra.
+
+Abaixo a lista de capítulos e volumes:
 
 - Volume 1: 1 ao 21
   - 14.5
@@ -51,7 +57,7 @@ A estrutura dos capítulos e volumes da obra pode ser encontrada no [site](https
 - Volume 10: 382 ao 429
 - Volume 11: 330 em diante (em lançamento)
 
-## Próximas Etapas
+## Próximas etapas do projeto
 
 - [x] Adicionar quebra de linha nos parágrafos
 - [x] Adaptar nome dos arquivos para ordenação "009, 099, 999"
