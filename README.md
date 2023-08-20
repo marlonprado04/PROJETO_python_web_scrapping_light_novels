@@ -1,81 +1,60 @@
-# Web Scrapping TBATE
+# Web Scrapping da Light Novel "The Beginning After The End" (TBATE)
 
-Repositório destinado a armazenar os arquivos do projeto de Web Scrapping da light novel The Beginning After The End.
+Este repositório contém os arquivos relacionados ao projeto de Web Scrapping da light novel "The Beginning After The End" (TBATE).
 
-- [Web Scrapping TBATE](#web-scrapping-tbate)
-  - [Sobre o projeto](#sobre-o-projeto)
-    - [Site usado](#site-usado)
-    - [Bibliotecas e versões](#bibliotecas-e-versoes)
-    - [URL utilizada](#url-utilizada)
-    - [Ordem de capítulos e volumes](#ordem-de-capitulos-e-volumes)
-  - [Próximas etapas do projeto](#proximas-etapas-do-projeto)
-  - [Para execução do código](#para-execucao-do-codigo)
+## Índice
 
-## Sobre o projeto
+- [Sobre o Projeto](#sobre-o-projeto)
+  - [Visão Geral](#visao-geral)
+  - [Tecnologias Utilizadas](#tecnologias-utilizadas)
+  - [Fontes de Dados](#fontes-de-dados)
+  - [Estrutura de Capítulos e Volumes](#estrutura-de-capitulos-e-volumes)
+- [Próximas Etapas](#proximas-etapas)
+- [Instruções de Execução](#instrucoes-de-execucao)
 
-O projeto é realizado em __Python__, através do VSCode com extensões que permitem trabalhar com arquivos `.ipynb`, mas pode ser compilado no __Google Colaboratory__ ou o próprio __Jupiter Notebook__.
+## Sobre o Projeto
 
-Também há uma versão alternativa feita em `.py` que pode ser executado em qualquer máquina com __Python__ instalado.
+### Visão Geral
 
-### Site usado
+Este projeto, implementado em **Python**, visa realizar Web Scraping da light novel "The Beginning After The End". O código pode ser executado no **VSCode** com extensões para trabalhar com arquivos `.ipynb`, no **Google Colaboratory** ou no **Jupyter Notebook**. Também há uma versão alternativa em `.py` que é executável em qualquer máquina com **Python** instalado.
 
-Na primeira versão do código o site utilizado para scrapping foi o [Reaper Scans](https://reaperscans.net/series/o-comeco-apos-o-fim-novel), mas após algumas alterações no layout do site resolvi substituí-lo pelo [Central Novel](https://centralnovel.com/series/the-beginning-after-the-end/) já que este contém mais estabilidade e os dados estão melhor estruturados.
+### Tecnologias Utilizadas
 
-### Bibliotecas e versões
+As principais tecnologias utilizadas neste projeto incluem:
 
-Para que o código funcione é necessário ter instalado e importado as bibliotecas `requests` e `BeautifulSoulp` da `bs4`.
+- **Python 3.10.2**
+- **Beautiful Soup 4.12.2** para o parsing HTML
+- **Requests 2.31.0** para fazer requisições web
 
-As versões utilizadas foram:
+### Fontes de Dados
 
-- `Python` => 3.10.2
-- `BeautifulSoup` => 4.12.2
-- `requests` => 2.31.0
+Inicialmente, o site usado para o scraping foi o [Reaper Scans](https://reaperscans.net/series/o-comeco-apos-o-fim-novel). No entanto, devido a alterações no layout, o [Central Novel](https://centralnovel.com/series/the-beginning-after-the-end/) foi escolhido pela sua estabilidade e melhor estruturação dos dados.
 
-### URL utilizada
+### Estrutura de Capítulos e Volumes
 
-Abaixo a URL atualmente utilizada na raspagem de dados deste projeto:
+A estrutura dos capítulos e volumes da obra pode ser encontrada no [site](https://tbate.fandom.com/wiki/Volumes_and_Chapters) e no site [Central Novel](https://centralnovel.com/series/the-beginning-after-the-end/), seguindo a ordem original da obra.
 
-Central Novel: <https://centralnovel.com/series/the-beginning-after-the-end/>
+- Volume 1: Capítulos 1 ao 21, Capítulo 14.5
+- Volume 2: Capítulos 22 ao 42
+- Volume 3: Capítulos 43 ao 68
+- ...
 
-### Ordem de capítulos e volumes 
-
-[Neste site](https://tbate.fandom.com/wiki/Volumes_and_Chapters) encontramos a listagem de capítulos e volumes da obra para tomarmos como base.
-
-O agrupamento no site __Central Novel__ respeita a ordem original da obra, conforme relação abaixo:
-
-- Volume 1 = 1 ao 21
-  - 14.5
-- Volume 2 = 22 ao 42
-- Volume 3 = 43 ao 68
-- Volume 4 = 69 ao 97
-- Volume 5 = 98 ao 138
-- Volume 6 = 139 ao 194
-- Volume 7 = 195 ao 249
-  - 221.5, 223.5, 230.5, 233.5
-- Volume 8 = 250 ao 313
-- Volume 8.5 (extra) = 1 ao 20
-- Volume 9 = 314 ao 381
-  - 374.5
-- Volume 10 = 382 ao 429
-- Volume 11 = 330 ao 439
-
-## Próximas etapas do projeto
+## Próximas Etapas
 
 - [x] Adicionar quebra de linha nos parágrafos
 - [x] Adaptar nome dos arquivos para ordenação "009, 099, 999"
-- [x] Criar arquivo alternativo no formato .py para poder editar e executar com mais facilidade
-- [x] Refatorar código para receber caminho de download informado pelo usuário
+- [x] Criar arquivo alternativo no formato .py para facilitar edição e execução
+- [x] Refatorar código para aceitar caminho de download informado pelo usuário
 - [x] Refatorar código para baixar capítulos intermediários (ex: 14-5, 221-5)
 
+## Instruções de Execução
 
-## Para execução do código 
+Para executar o código, siga as instruções abaixo:
 
-Para execução é necessário ter o Python na versão 3 e as devidas bibliotecas instaladas. Com o ambiente configurado basta rodar o código em Python, e informar:
-
-- Capítulo inicial para download 
-- Capítulo final para download
-- Caminho para salvar o arquivo
-  - Exemplo: `./` (para diretório atual, onde o código se encontra)
-
-Uma alternativa é utilizad o Jupyter Notebook ou o site do Google Colab. Nele você pode importar o código na extensão .ipynb e executar lá.
-
+1. Garanta que você possui o Python 3 instalado e as bibliotecas `requests` e `BeautifulSoup` na versão adequada.
+2. Execute o código Python e forneça as informações necessárias:
+   - Capítulo inicial para download
+   - Capítulo final para download
+   - Caminho para salvar o arquivo (exemplo: `./` para diretório atual)
+   
+Alternativamente, você pode usar o Jupyter Notebook ou o Google Colab para importar o código `.ipynb` e executá-lo lá.
