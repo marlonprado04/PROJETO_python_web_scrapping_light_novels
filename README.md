@@ -35,10 +35,21 @@ Inicialmente, o site usado para o scraping foi o [Reaper Scans](https://reapersc
 
 A estrutura dos capítulos e volumes da obra pode ser encontrada no [site](https://tbate.fandom.com/wiki/Volumes_and_Chapters) e no site [Central Novel](https://centralnovel.com/series/the-beginning-after-the-end/), seguindo a ordem original da obra.
 
-- Volume 1: Capítulos 1 ao 21, Capítulo 14.5
-- Volume 2: Capítulos 22 ao 42
-- Volume 3: Capítulos 43 ao 68
-- ...
+- Volume 1: 1 ao 21
+  - 14.5
+- Volume 2: 22 ao 42
+- Volume 3: 43 ao 68
+- Volume 4: 69 ao 97
+- Volume 5: 98 ao 138
+- Volume 6: 139 ao 194
+- Volume 7: 195 ao 249
+  - 221.5, 223.5, 230.5, 233.5
+- Volume 8: 250 ao 313
+- Volume 8.5 (extra): 1 ao 20
+- Volume 9: 314 ao 381
+  - 374.5
+- Volume 10: 382 ao 429
+- Volume 11: 330 em diante (em lançamento)
 
 ## Próximas Etapas
 
