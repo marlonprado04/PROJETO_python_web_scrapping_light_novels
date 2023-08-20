@@ -2,7 +2,7 @@
 from bs4 import BeautifulSoup
 import requests
 
-# Criando URL do site
+# Criando variável para URL do site
 url = "https://centralnovel.com/the-beginning-after-the-end-capitulo-"
 
 # Criando variáveis para receber range de capítulos para download
@@ -12,8 +12,9 @@ caminho = input(
     "Digite o caminho onde deseja salvar os arquivos (ex: ./, /, ./capitulos/): "
 )
 
-# Criando laço de repetiçãoint
+# Criando laço de repetição para executar o código em loop
 while capitulo_inicial <= capitulo_final:
+    # Criando if para tratar URL de acordo com capítulo atual
     if ".5" in str(capitulo_inicial):
         # Substituindo . por - no caso de ser um capítulo intermediário
         cap_inicial = str(capitulo_inicial).replace(".", "-")
@@ -28,19 +29,19 @@ while capitulo_inicial <= capitulo_final:
         url_completa = f"{url}{cap_inicial}"
         print(url_completa)
 
-    # Tentando executar a extração com a URL tratada
+    # Criando tentativa com a URL passada
     try:
         # Passando a URL para uma requisição do requests
         requisicao = requests.get(url_completa)
         requisicao.raise_for_status()  # Verifica se ocorreu algum erro na requisição
 
-        # Passando o HTML da requisição para uma variável
+        # Passando o HTML requisitado para uma variável
         html = requisicao.text
 
         # Parseando o HTML da requisição
         soup = BeautifulSoup(html, "html.parser")
 
-        # Passando o título com número do capítulo para uma variável
+        # Passando o título + número do capítulo para uma variável
         titulo_capitulo_element = soup.find("h1", {"class": "entry-title"})
         if titulo_capitulo_element:
             titulo_capitulo = titulo_capitulo_element.get_text()
@@ -49,7 +50,7 @@ while capitulo_inicial <= capitulo_final:
             titulo_nome_element = soup.find("div", {"class": "cat-series"})
             if titulo_nome_element:
                 titulo_nome = titulo_nome_element.get_text()
-                # Substituindo / no nome do capítulo para não dar conflito de diretório
+                # Substituindo a / no nome do capítulo para não dar conflito de diretório
                 titulo_nome = titulo_nome.replace("/", "_")
 
                 # Criando variável para recortar apenas o capítulo
@@ -67,7 +68,7 @@ while capitulo_inicial <= capitulo_final:
                     # Formatando o número do capítulo com três dígitos
                     capitulo = f"Capítulo {numero_capitulo.zfill(3)}"
                 else:
-                    ## Armazenando mensagem de erro caso capítulo não tenha sido informado
+                    ## Armazenando mensagem de erro caso capítulo não tenha sido informado no site
                     capitulo = f"#####ERRO##### {titulo_capitulo}"
                     capitulo = capitulo.replace("/", "_")
 
