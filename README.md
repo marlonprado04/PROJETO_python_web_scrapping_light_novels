@@ -8,9 +8,9 @@ Este repositório contém os arquivos relacionados ao projeto de Web Scrapping d
   - [Visão Geral](#visão-geral)
   - [Tecnologias Utilizadas](#tecnologias-utilizadas)
   - [Fontes de Dados](#fontes-de-dados)
-  - [Estrutura de Capítulos e Volumes](#estrutura-de-capitulos-e-volumes)
-- [Próximas Etapas](#proximas-etapas)
-- [Instruções de Execução](#instrucoes-de-execuçao)
+  - [Estrutura de Capítulos e Volumes](#estrutura-de-capítulos-e-volumes)
+- [Próximas Etapas](#próximas-etapas)
+- [Instruções de Execução](#instruções-de-execução)
 
 
 ## Sobre o Projeto
@@ -59,3 +59,5 @@ Para executar o código, siga as instruções abaixo:
    - Caminho para salvar o arquivo (exemplo: `./` para diretório atual)
    
 Alternativamente, você pode usar o Jupyter Notebook ou o Google Colab para importar o código `.ipynb` e executá-lo lá.
+
+No caso de dúvidas ou sugestão o repositório está livre para abertura de issues ou se preferir entre em contato comigo através do meu email: marlonprado04@gmail.com
