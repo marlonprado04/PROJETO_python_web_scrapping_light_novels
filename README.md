@@ -5,12 +5,13 @@ Este repositório contém os arquivos relacionados ao projeto de Web Scrapping d
 ## Índice
 
 - [Sobre o Projeto](#sobre-o-projeto)
-  - [Visão Geral](#visao-geral)
+  - [Visão Geral](#visão-geral)
   - [Tecnologias Utilizadas](#tecnologias-utilizadas)
   - [Fontes de Dados](#fontes-de-dados)
-  - [Estrutura de Capítulos e Volumes](#estrutura-de-capitulos-e-volumes)
-- [Próximas Etapas](#proximas-etapas)
-- [Instruções de Execução](#instrucoes-de-execucao)
+  - [Estrutura de Capítulos e Volumes](#estrutura-de-capítulos-e-volumes)
+- [Próximas Etapas](#próximas-etapas)
+- [Instruções de Execução](#instruções-de-execução)
+
 
 ## Sobre o Projeto
 
