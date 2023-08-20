@@ -2,17 +2,26 @@
 
 Repositório destinado a armazenar os arquivos do projeto de Web Scrapping da light novel The Beginning After The End.
 
+- [Web Scrapping TBATE](#web-scrapping-tbate)
+  - [Sobre o projeto](#sobre-o-projeto)
+    - [Site usado](#site-usado)
+    - [Bibliotecas e versões](#bibliotecas-e-versoes)
+    - [URL utilizada](#url-utilizada)
+    - [Ordem de capítulos e volumes](#ordem-de-capitulos-e-volumes)
+  - [Próximas etapas do projeto](#proximas-etapas-do-projeto)
+  - [Para execução do código](#para-execucao-do-codigo)
+
 ## Sobre o projeto
 
 O projeto é realizado em __Python__, através do VSCode com extensões que permitem trabalhar com arquivos `.ipynb`, mas pode ser compilado no __Google Colaboratory__ ou o próprio __Jupiter Notebook__.
 
 Também há uma versão alternativa feita em `.py` que pode ser executado em qualquer máquina com __Python__ instalado.
 
-## Site usado
+### Site usado
 
 Na primeira versão do código o site utilizado para scrapping foi o [Reaper Scans](https://reaperscans.net/series/o-comeco-apos-o-fim-novel), mas após algumas alterações no layout do site resolvi substituí-lo pelo [Central Novel](https://centralnovel.com/series/the-beginning-after-the-end/) já que este contém mais estabilidade e os dados estão melhor estruturados.
 
-## Bibliotecas e versões
+### Bibliotecas e versões
 
 Para que o código funcione é necessário ter instalado e importado as bibliotecas `requests` e `BeautifulSoulp` da `bs4`.
 
@@ -22,13 +31,13 @@ As versões utilizadas foram:
 - `BeautifulSoup` => 4.12.2
 - `requests` => 2.31.0
 
-## URL utilizadas
+### URL utilizada
 
 Abaixo a URL atualmente utilizada na raspagem de dados deste projeto:
 
 Central Novel: <https://centralnovel.com/series/the-beginning-after-the-end/>
 
-## Ordem de capítulos e livros do TBATE
+### Ordem de capítulos e volumes 
 
 [Neste site](https://tbate.fandom.com/wiki/Volumes_and_Chapters) encontramos a listagem de capítulos e volumes da obra para tomarmos como base.
 
@@ -50,10 +59,23 @@ O agrupamento no site __Central Novel__ respeita a ordem original da obra, confo
 - Volume 10 = 382 ao 429
 - Volume 11 = 330 ao 439
 
-## Próximas etapas
+## Próximas etapas do projeto
 
 - [x] Adicionar quebra de linha nos parágrafos
 - [x] Adaptar nome dos arquivos para ordenação "009, 099, 999"
 - [x] Criar arquivo alternativo no formato .py para poder editar e executar com mais facilidade
 - [x] Refatorar código para receber caminho de download informado pelo usuário
 - [x] Refatorar código para baixar capítulos intermediários (ex: 14-5, 221-5)
+
+
+## Para execução do código 
+
+Para execução é necessário ter o Python na versão 3 e as devidas bibliotecas instaladas. Com o ambiente configurado basta rodar o código em Python, e informar:
+
+- Capítulo inicial para download 
+- Capítulo final para download
+- Caminho para salvar o arquivo
+  - Exemplo: `./` (para diretório atual, onde o código se encontra)
+
+Uma alternativa é utilizad o Jupyter Notebook ou o site do Google Colab. Nele você pode importar o código na extensão .ipynb e executar lá.
+
