@@ -3,11 +3,11 @@ from bs4 import BeautifulSoup
 import requests
 
 # Criando variável para URL do site
-#url = "https://centralnovel.com/the-beginning-after-the-end-capitulo-"
+url = "https://centralnovel.com/the-beginning-after-the-end-capitulo-"
 
 # URL para outra novel
 # Pode ser alterado para qualquer novel do site desde que respeite a estrutura padrão
-url = "https://centralnovel.com/trash-of-the-counts-family-capitulo-"
+# url = "https://centralnovel.com/trash-of-the-counts-family-capitulo-"
 
 # Criando variáveis para receber range de capítulos para download
 capitulo_inicial = float(input("Desde qual capítulo deseja fazer download?"))
