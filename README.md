@@ -4,22 +4,23 @@ Este repositório contém os arquivos relacionados ao projeto de Web Scrapping d
 
 ## Índice
 
-- [Sobre o Projeto](#sobre-o-projeto)
-  - [Visão Geral](#visão-geral)
-  - [Tecnologias Utilizadas](#tecnologias-utilizadas)
-  - [Fontes de Dados](#fontes-de-dados)
-  - [Estrutura de Capítulos e Volumes](#estrutura-de-capítulos-e-volumes)
-- [Próximas etapas do projeto](#próximas-etapas-do-projeto)
-- [Instruções de Execução](#instruções-de-execução)
-
+- [Web Scrapping da Light Novel "The Beginning After The End" (TBATE)](#web-scrapping-da-light-novel-the-beginning-after-the-end-tbate)
+  - [Índice](#índice)
+  - [Sobre o Projeto](#sobre-o-projeto)
+    - [Visão Geral](#visão-geral)
+    - [Tecnologias Utilizadas](#tecnologias-utilizadas)
+    - [Fontes de Dados](#fontes-de-dados)
+    - [Estrutura de Capítulos e Volumes](#estrutura-de-capítulos-e-volumes)
+  - [Próximas etapas do projeto](#próximas-etapas-do-projeto)
+  - [Instruções de Execução](#instruções-de-execução)
 
 ## Sobre o Projeto
 
 ### Visão Geral
 
-Este projeto, implementado em **Python**, visa realizar Web Scraping da light novel "The Beginning After The End". 
+Este projeto, implementado em **Python**, visa realizar Web Scraping da light novel "The Beginning After The End".
 
-O código pode ser executado no **VSCode** com extensões para trabalhar com arquivos `.ipynb`, no **Google Colaboratory** ou no **Jupyter Notebook**. 
+O código pode ser executado no **VSCode** com extensões para trabalhar com arquivos `.ipynb`, no **Google Colaboratory** ou no **Jupyter Notebook**.
 
 Também há uma versão alternativa em `.py` que é executável em qualquer máquina com **Python 3** instalado.
 
@@ -74,7 +75,7 @@ Para executar o código, siga as instruções abaixo:
    - Capítulo inicial para download
    - Capítulo final para download
    - Caminho para salvar o arquivo (exemplo: `./` para diretório atual)
-   
+
 Alternativamente, você pode usar o Jupyter Notebook ou o Google Colab para importar o código `.ipynb` e executá-lo lá.
 
 No caso de dúvidas ou sugestão o repositório está livre para abertura de issues ou se preferir entre em contato comigo através do meu email: marlonprado04@gmail.com
