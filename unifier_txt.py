@@ -8,10 +8,11 @@ nome_arquivo = input("Digite o nome do arquivo unificado: ")
 if not os.path.isdir(pasta):
     print("Caminho inválido.")
 else:
-    # Lista os arquivos .txt na pasta
+    # Lista os arquivos .txt na pasta e os ordena
     arquivos_txt = [
         arquivo for arquivo in os.listdir(pasta) if arquivo.endswith(".txt")
     ]
+    arquivos_txt.sort()  # Ordena os arquivos
 
     # Verifica se há arquivos .txt na pasta
     if not arquivos_txt:
