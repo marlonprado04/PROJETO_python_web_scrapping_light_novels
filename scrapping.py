@@ -114,4 +114,4 @@ while capitulo_inicial <= capitulo_final:
         pass
 
     # Incrementando capitulo
-    capitulo_inicial += 1
+    capitulo_inicial += 0.5
