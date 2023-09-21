@@ -78,4 +78,4 @@ Para executar o código, siga as instruções abaixo:
 
 Alternativamente, você pode usar o Jupyter Notebook ou o Google Colab para importar o código `.ipynb` e executá-lo lá.
 
-No caso de dúvidas ou sugestão o repositório está livre para abertura de issues ou se preferir entre em contato comigo através do meu email: marlonprado04@gmail.com
+No caso de dúvidas ou sugestão o repositório está livre para abertura de issues ou se preferir entre em contato comigo através do meu email: <marlonprado04@gmail.com>
