@@ -2,13 +2,9 @@ The
 Beginning After The End – Capítulo 449
 Ondulação na Linha do Tempo
 
-<<<<<<< HEAD
 Atenção: Este conteúdo foi traduzido automaticamente por meio de Inteligência Artificial (I.A.). Embora a qualidade da tradução possa ser superior às traduções automáticas padrões, ainda é possível que haja falhas ou imprecisões na tradução. Por favor, tenha isso em mente ao ler este capítulo.
 
 Lembrem que não é a Central Novel que traduz essa obra, apenas repostamos o conteúdo, a SCAN que traduz está com problemas, então não faz sentido nos cobrarem alguma tradução. Dito isso, pra “quebrar um galho” temporariamente estamos disponibilizando a tradução dessa forma mas como já avisado ela está longe de ser perfeita porém costuma ser melhor que o Google Tradutor.
-=======
-Traduzido usando o ChatGPT
->>>>>>> 0a9397c (docs: add charpter of 440 to 455)
 
 Há 10 minutos
 
@@ -320,19 +316,9 @@ Eu ainda estava olhando para o campo de espinhos quando Regis veio trotando ao m
 
 Nós não tínhamos parado o ataque. Nós apenas havíamos mudado os eventos para um futuro que agora não sabíamos.
 
-<<<<<<< HEAD
-=======
-Resumindo, agora não sabemos o que poderá vir a acontecer, estamos lixados
-
->>>>>>> 0a9397c (docs: add charpter of 440 to 455)
 Ué, esse não é igual ao capítulo anterior?
 
 Vacilo meu duplicou, corrigido.
 
-<<<<<<< HEAD
-=======
-Obrigado
-
->>>>>>> 0a9397c (docs: add charpter of 440 to 455)
 Isenção de responsabilidade: Este site Central Novel não armazena nenhum arquivo em seu servidor. Todos os conteúdos são fornecidos por terceiros não afiliados.
 

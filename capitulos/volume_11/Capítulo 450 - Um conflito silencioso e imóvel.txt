@@ -2,13 +2,9 @@ The
 Beginning After The End – Capítulo 450
 Um conflito silencioso e imóvel
 
-<<<<<<< HEAD
 Atenção: Este conteúdo foi traduzido automaticamente por meio de Inteligência Artificial (I.A.). Embora a qualidade da tradução possa ser superior às traduções automáticas padrões, ainda é possível que haja falhas ou imprecisões na tradução. Por favor, tenha isso em mente ao ler este capítulo.
 
 Lembrem que não é a Central Novel que traduz essa obra, apenas repostamos o conteúdo, a SCAN que traduz está com problemas, então não faz sentido nos cobrarem alguma tradução. Dito isso, pra “quebrar um galho” temporariamente estamos disponibilizando a tradução dessa forma mas como já avisado ela está longe de ser perfeita porém costuma ser melhor que o Google Tradutor.
-=======
-Traduzido usando o ChatGPT
->>>>>>> 0a9397c (docs: add charpter of 440 to 455)
 
 Agora
 
@@ -272,14 +268,5 @@ Charon deixou seu olhar escuro permanecer em Windsom por um longo momento mesmo 
 
 Alguém sabe o que aconteceu com Camus e a mestra da kathyln ? Sinceramente não me lembro do que aconteceu com esses dois após a morte do Buhnder
 
-<<<<<<< HEAD
-=======
-Provavelmente morreu tbm junto dos outros anciões
-
-isso me veio outra curiosidade, Arthur tinha uma secretária que cuidava do treinamento dele, uma elfa que tinha os um “dojutsu” os olhos dela eram coloridos e ela conseguia ver o fluxo da mana com eles. alguém sabe dizer se ela morreu também?
-
-Ela está na terra dos anões, vildorial
-
->>>>>>> 0a9397c (docs: add charpter of 440 to 455)
 Isenção de responsabilidade: Este site Central Novel não armazena nenhum arquivo em seu servidor. Todos os conteúdos são fornecidos por terceiros não afiliados.
 
