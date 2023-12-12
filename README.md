@@ -20,9 +20,7 @@ Este repositório contém os arquivos relacionados ao projeto de Web Scrapping d
 
 Este projeto, implementado em **Python**, visa realizar Web Scraping da light novel "The Beginning After The End".
 
-O código pode ser executado no **VSCode** com extensões para trabalhar com arquivos `.ipynb`, no **Google Colaboratory** ou no **Jupyter Notebook**.
-
-Também há uma versão alternativa em `.py` que é executável em qualquer máquina com **Python 3** instalado.
+Para executar o projeto basta rodar o arquivo `scrapping.py` que é executável em qualquer máquina com **Python 3** instalado.
 
 ### Tecnologias Utilizadas
 
@@ -76,6 +74,6 @@ Para executar o código, siga as instruções abaixo:
    - Capítulo final para download
    - Caminho para salvar o arquivo (exemplo: `./` para diretório atual)
 
-Alternativamente, você pode usar o Jupyter Notebook ou o Google Colab para importar o código `.ipynb` e executá-lo lá.
+Alternativamente, você pode usar o Jupyter Notebook ou o Google Colab para copiar o código `.py` e executá-lo lá. 
 
 No caso de dúvidas ou sugestão o repositório está livre para abertura de issues ou se preferir entre em contato comigo através do meu email: <marlonprado04@gmail.com>
