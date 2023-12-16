@@ -40,20 +40,20 @@ A estrutura dos capítulos e volumes da obra pode ser encontrada  [neste site](h
 
 Abaixo a lista de capítulos e volumes:
 
-- Volume 1: 1 ao 21
+- Volume 1: 1 ao 21 (20 caps)
   - 14.5
-- Volume 2: 22 ao 42
-- Volume 3: 43 ao 68
-- Volume 4: 69 ao 97
-- Volume 5: 98 ao 138
-- Volume 6: 139 ao 194
-- Volume 7: 195 ao 249
+- Volume 2: 22 ao 42 (20 caps)
+- Volume 3: 43 ao 68 (25 caps)
+- Volume 4: 69 ao 97 (28 caps)
+- Volume 5: 98 ao 138 (30 caps)
+- Volume 6: 139 ao 194 (55 caps)
+- Volume 7: 195 ao 249 (54 caps)
   - 221.5, 223.5, 230.5, 233.5
-- Volume 8: 250 ao 313
-- Volume 8.5 (extra): 1 ao 20
-- Volume 9: 314 ao 381
+- Volume 8: 250 ao 313 (63 caps)
+- Volume 8.5 (extra): 1 ao 20 (20 caps)
+- Volume 9: 314 ao 381 (67 caps)
   - 374.5
-- Volume 10: 382 ao 429
+- Volume 10: 382 ao 429 (47 caps)
 - Volume 11: 330 em diante (em lançamento)
 
 ## Próximas etapas do projeto
