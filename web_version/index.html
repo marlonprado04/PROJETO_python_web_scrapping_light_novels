@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download de Capítulos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Download de Capítulos</h1>
+        <form id="downloadForm">
+            <label for="url">URL da Novel:</label>
+            <input type="text" id="url" name="url" required>
+
+            <label for="startChapter">Capítulo Inicial:</label>
+            <input type="number" id="startChapter" name="startChapter" step="0.5" required>
+
+            <label for="endChapter">Capítulo Final:</label>
+            <input type="number" id="endChapter" name="endChapter" step="0.5" required>
+
+            <label for="path">Caminho para Salvar:</label>
+            <input type="text" id="path" name="path" required>
+
+            <button type="submit">Baixar</button>
+        </form>
+        <pre id="output"></pre>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
