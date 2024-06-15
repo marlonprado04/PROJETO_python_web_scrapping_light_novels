@@ -39,17 +39,16 @@ document.getElementById('downloadForm').addEventListener('submit', function (e) 
                 const fileName = `${title.replace('Capítulo ', '').replace(/\s/g, '').padStart(3, '0')} - ${name}.txt`; // Cria o nome do arquivo
                 const fileContent = [title, name, '', ...Array.from(doc.querySelectorAll('p')).map(p => p.textContent)].join('\n\n'); // Cria o conteúdo do arquivo
 
-                const handle = await getDirectoryHandle(); // Obtém o handle do diretório
-                if (handle) {
-                    const fileHandle = await handle.getFileHandle(fileName, { create: true }); // Cria o handle do arquivo
-                    const writable = await fileHandle.createWritable(); // Cria um writable stream
-                    await writable.write(fileContent); // Escreve o conteúdo no arquivo
-                    await writable.close(); // Fecha o writable stream
+                // Cria um Blob com o conteúdo do arquivo e simula um download
+                const blob = new Blob([fileContent], { type: 'text/plain' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = fileName;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
 
-                    output.textContent += `Capítulo ${chapter} baixado com sucesso.\n`; // Exibe uma mensagem de sucesso
-                } else {
-                    output.textContent += `Erro ao acessar o caminho: ${path}\n`; // Exibe uma mensagem de erro se não conseguir acessar o caminho
-                }
+                output.textContent += `Capítulo ${chapter} baixado com sucesso.\n`; // Exibe uma mensagem de sucesso
             } else {
                 output.textContent += `Capítulo ${chapter} não encontrado no site.\n`; // Exibe uma mensagem se o capítulo não for encontrado no site
             }
@@ -62,26 +61,10 @@ document.getElementById('downloadForm').addEventListener('submit', function (e) 
     const downloadLoop = async () => {
         while (currentChapter <= endChapter) {
             await downloadChapter(currentChapter); // Faz o download do capítulo atual
-            currentChapter += 0.5; // Incrementa o capítulo atual
+            currentChapter += 0.5; // Incrementa o capítulo em 0.5
         }
-        output.textContent += 'Downloads concluídos.'; // Exibe uma mensagem quando todos os downloads forem concluídos
+        output.textContent += "Downloads concluídos.\n"; // Exibe uma mensagem ao concluir todos os downloads
     };
 
     downloadLoop(); // Inicia o loop de download
 });
-
-// Adiciona um listener de evento ao botão "Selecionar Pasta" para permitir ao usuário selecionar uma pasta
-document.getElementById('selectFolderButton').addEventListener('click', async () => {
-    try {
-        const handle = await window.showDirectoryPicker(); // Abre o seletor de diretório
-        document.getElementById('path').value = handle.name; // Define o valor do campo de caminho com o nome do diretório
-        window.selectedDirectoryHandle = handle; // Armazena o handle do diretório na janela global
-    } catch (err) {
-        console.error('Erro ao selecionar a pasta:', err); // Exibe uma mensagem de erro se ocorrer um erro ao selecionar a pasta
-    }
-});
-
-// Função para obter o handle do diretório selecionado
-async function getDirectoryHandle() {
-    return window.selectedDirectoryHandle || null; // Retorna o handle do diretório ou null se não houver nenhum selecionado
-}
