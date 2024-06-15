@@ -4,7 +4,6 @@ document.getElementById('downloadForm').addEventListener('submit', function (e) 
     const url = document.getElementById('url').value;
     const startChapter = parseFloat(document.getElementById('startChapter').value);
     const endChapter = parseFloat(document.getElementById('endChapter').value);
-    const path = document.getElementById('path').value;
     const output = document.getElementById('output');
 
     output.textContent = "Iniciando downloads...\n";
@@ -20,6 +19,8 @@ document.getElementById('downloadForm').addEventListener('submit', function (e) 
         }
 
         try {
+            console.log(`Fetching URL: ${chapterUrl}`);  // Log da URL que está sendo buscada
+
             const response = await fetch(chapterUrl);
             if (!response.ok) throw new Error('Capítulo não encontrado');
 
@@ -33,18 +34,20 @@ document.getElementById('downloadForm').addEventListener('submit', function (e) 
                 const title = titleElement.textContent;
                 const name = nameElement.textContent.replace(/\//g, '_').replace(/\?/g, '');
 
-                const fileName = `${path}${title.replace('Capítulo ', '').replace(/\s/g, '').padStart(3, '0')} - ${name}.txt`;
+                const fileName = `${title.replace('Capítulo ', '').replace(/\s/g, '').padStart(3, '0')} - ${name}.txt`;
                 const fileContent = [title, name, '', ...Array.from(doc.querySelectorAll('p')).map(p => p.textContent)].join('\n\n');
 
-                const blob = new Blob([fileContent], { type: 'text/plain' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = fileName;
-                a.click();
-                URL.revokeObjectURL(url);
+                const handle = await getDirectoryHandle();
+                if (handle) {
+                    const fileHandle = await handle.getFileHandle(fileName, { create: true });
+                    const writable = await fileHandle.createWritable();
+                    await writable.write(fileContent);
+                    await writable.close();
 
-                output.textContent += `Capítulo ${chapter} baixado com sucesso.\n`;
+                    output.textContent += `Capítulo ${chapter} baixado com sucesso.\n`;
+                } else {
+                    output.textContent += `Erro ao acessar o caminho: ${path}\n`;
+                }
             } else {
                 output.textContent += `Capítulo ${chapter} não encontrado no site.\n`;
             }
@@ -63,3 +66,17 @@ document.getElementById('downloadForm').addEventListener('submit', function (e) 
 
     downloadLoop();
 });
+
+document.getElementById('selectFolderButton').addEventListener('click', async () => {
+    try {
+        const handle = await window.showDirectoryPicker();
+        document.getElementById('path').value = handle.name;
+        window.selectedDirectoryHandle = handle;
+    } catch (err) {
+        console.error('Erro ao selecionar a pasta:', err);
+    }
+});
+
+async function getDirectoryHandle() {
+    return window.selectedDirectoryHandle || null;
+}

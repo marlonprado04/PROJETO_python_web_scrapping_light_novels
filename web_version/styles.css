@@ -56,3 +56,12 @@ pre {
     white-space: pre-wrap;
     word-wrap: break-word;
 }
+
+#selectFolderButton {
+    background-color: #007bff;
+    margin-top: 10px;
+}
+
+#selectFolderButton:hover {
+    background-color: #0056b3;
+}
