@@ -1,3 +1,6 @@
+[![python](https://img.shields.io/badge/Python-3.10.2-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://www.gnu.org/licenses/mit)
+
 # Web Scrapping da Light Novel "The Beginning After The End" (TBATE)
 
 Este repositório contém os arquivos relacionados ao projeto de Web Scrapping da light novel The Beginning After The End (TBATE).
