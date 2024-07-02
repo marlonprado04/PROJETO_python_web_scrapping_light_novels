@@ -24,14 +24,14 @@ while capitulo_inicial <= capitulo_final:
         cap_inicial = str(capitulo_inicial).replace(".", "-")
         # Passando URL completa
         url_completa = f"{url}{cap_inicial}"
-        print(f"Capitulo:{cap_inicial}")
+        print(f"Tentando baixar: {cap_inicial}")
 
     else:
         # Removendo .0 no caso de não ser um capítulo intermediário
         cap_inicial = str(capitulo_inicial).replace(".0", "")
         # Passando URL completa
         url_completa = f"{url}{cap_inicial}"
-        print(f"Capitulo:{cap_inicial}")
+        print(f"Tentando baixar: {cap_inicial}")
 
 
     # Criando tentativa com a URL passada
@@ -108,7 +108,8 @@ while capitulo_inicial <= capitulo_final:
     except requests.exceptions.HTTPError as err:
         # Caso ocorra um erro HTTP (por exemplo, 404), a URL não existe
         # Imprimindo mensagem informando que o capítulo não existe
-        print(f"Capítulo não encontrado: {cap_inicial}")
+        print(f"Não localizado : {cap_inicial}")
+        print(f"Erro: {err}")
 
         # Passando para o próximo incremento
         pass
