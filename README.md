@@ -57,7 +57,8 @@ Abaixo a lista de capítulos e volumes:
 - Volume 9: 314 ao 381 (67 caps)
   - 374.5
 - Volume 10: 382 ao 429 (47 caps)
-- Volume 11: 330 em diante (em lançamento)
+- Volume 11: 430 em 482 (52 caps)
+- Volume 12: aguardando
 
 ## Próximas etapas do projeto
 
