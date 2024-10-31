@@ -3,11 +3,13 @@ from bs4 import BeautifulSoup
 import requests
 
 # Criando variável para URL do site
-url = "https://centralnovel.com/the-beginning-after-the-end-capitulo-"
+#url = "https://centralnovel.com/the-beginning-after-the-end-capitulo-"
 
 # URL para outra novel
 # Pode ser alterado para qualquer novel do site desde que respeite a estrutura padrão
 # url = "https://centralnovel.com/trash-of-the-counts-family-capitulo-"
+
+url = "https://centralnovel.com/shadow-slave-capitulo-"
 
 # Criando variáveis para receber range de capítulos para download
 capitulo_inicial = float(input("Desde qual capítulo deseja fazer download?"))
@@ -81,16 +83,20 @@ while capitulo_inicial <= capitulo_final:
                     capitulo = capitulo.replace("/", "_")
 
                 # Criando arquivo com número do capítulo e nome
-                with open(f"{caminho}{capitulo} - {titulo_nome}.txt", "w") as arquivo:
+                with open(f"{caminho}{capitulo} - {titulo_nome}.txt", "w", encoding="utf-8") as arquivo:
                     arquivo.write(titulo_capitulo)
                     arquivo.write("\n")
                     arquivo.write(titulo_nome)
                     arquivo.write("\n\n")
 
+                # classe da sessão de texto do capitulo = epcontent entry-content
+                # 1. Pegar apenas a parte de sessão de conteudo
+                content_html = soup.find("div", {"class": "epcontent entry-content"})
+                
                 # Criando loop para armazenar cada parágrafo dentro do arquivo criado
-                for paragrafo in soup.find_all("p"):
+                for paragrafo in content_html.find_all("p"):
                     with open(
-                        f"{caminho}{capitulo} - {titulo_nome}.txt", "a"
+                        f"{caminho}{capitulo} - {titulo_nome}.txt", "a", encoding="utf-8"
                     ) as arquivo:
                         arquivo.write(paragrafo.get_text())
                         arquivo.write("\n\n")
@@ -115,4 +121,4 @@ while capitulo_inicial <= capitulo_final:
         pass
 
     # Incrementando capitulo
-    capitulo_inicial += 0.5
+    capitulo_inicial += 1
