@@ -20,105 +20,64 @@ caminho = input(
 
 # Criando laço de repetição para executar o código em loop
 while capitulo_inicial <= capitulo_final:
-    # Criando if para tratar URL de acordo com capítulo atual
-    if ".5" in str(capitulo_inicial):
-        # Substituindo . por - no caso de ser um capítulo intermediário
-        cap_inicial = str(capitulo_inicial).replace(".", "-")
-        # Passando URL completa
+        cap_inicial = (
+            str(capitulo_inicial).replace(".5", "-")
+            if ".5" in str(capitulo_inicial)
+            else str(capitulo_inicial).replace(".0", "")
+        )
         url_completa = f"{url}{cap_inicial}"
         print(f"Tentando baixar: {cap_inicial}")
 
-    else:
-        # Removendo .0 no caso de não ser um capítulo intermediário
-        cap_inicial = str(capitulo_inicial).replace(".0", "")
-        # Passando URL completa
-        url_completa = f"{url}{cap_inicial}"
-        print(f"Tentando baixar: {cap_inicial}")
+        try:
+            requisicao = requests.get(url_completa)
+            requisicao.raise_for_status()
+            html = requisicao.text
+            soup = BeautifulSoup(html, "html.parser")
 
+            titulo_capitulo_element = soup.find("h1", {"class": "entry-title"})
+            if titulo_capitulo_element:
+                titulo_capitulo = titulo_capitulo_element.get_text()
+                titulo_nome_element = soup.find("div", {"class": "cat-series"})
+                if titulo_nome_element:
+                    titulo_nome = (
+                        titulo_nome_element.get_text()
+                        .replace("/", "_")
+                        .replace("?", "")
+                    )
+                    indice = titulo_capitulo.find("Capítulo")
 
-    # Criando tentativa com a URL passada
-    try:
-        # Passando a URL para uma requisição do requests
-        requisicao = requests.get(url_completa)
-        requisicao.raise_for_status()  # Verifica se ocorreu algum erro na requisição
+                    if indice != -1:
+                        capitulo = titulo_capitulo[indice:].replace("/", "_")
+                        numero_capitulo = capitulo.replace("Capítulo", "").strip()
+                        capitulo = f"Capítulo {numero_capitulo.zfill(3)}"
 
-        # Passando o HTML requisitado para uma variável
-        html = requisicao.text
+                        with open(
+                            f"{caminho}{capitulo} - {titulo_nome}.txt",
+                            "w",
+                            encoding="utf-8",
+                        ) as arquivo:
+                            arquivo.write(
+                                titulo_capitulo + "\n" + titulo_nome + "\n\n"
+                            )
+                            content_html = soup.find(
+                                "div", {"class": "epcontent entry-content"}
+                            )
+                            for paragrafo in content_html.find_all("p"):
+                                arquivo.write(paragrafo.get_text() + "\n\n")
 
-        # Parseando o HTML da requisição
-        soup = BeautifulSoup(html, "html.parser")
-
-        # Passando o título + número do capítulo para uma variável
-        titulo_capitulo_element = soup.find("h1", {"class": "entry-title"})
-        if titulo_capitulo_element:
-            titulo_capitulo = titulo_capitulo_element.get_text()
-
-            # Passando o nome do capítulo para uma variável
-            titulo_nome_element = soup.find("div", {"class": "cat-series"})
-            if titulo_nome_element:
-                titulo_nome = titulo_nome_element.get_text()
-                # Substituindo a / no nome do capítulo para não dar conflito de diretório
-                titulo_nome = titulo_nome.replace("/", "_")
-                
-                # Substituindo o ? no nome do capítulo para não dar conflito no sistema de arquivos
-                titulo_nome = titulo_nome.replace("?", "")
-
-                # Criando variável para recortar apenas o capítulo
-                indice = titulo_capitulo.find("Capítulo")
-
-                # Realizando operação para tratar o título "Capítulo x"
-                if indice != -1:
-                    # Obtendo texto "Capítulo x"
-                    capitulo = titulo_capitulo[indice:]
-                    capitulo = capitulo.replace("/", "_")
-                    
-                    # Obtendo apenas o número do capítulo extraído do título
-                    numero_capitulo = capitulo.replace("Capítulo", "").replace(" ", "").replace("\n", "")
-
-                    # Formatando o número do capítulo com três dígitos
-                    capitulo = f"Capítulo {numero_capitulo.zfill(3)}"
+                        print(f"Baixado: {capitulo} - {titulo_nome}")
+                    else:
+                        print(f"#####ERRO##### {titulo_capitulo}")
                 else:
-                    ## Armazenando mensagem de erro caso capítulo não tenha sido informado no site
-                    capitulo = f"#####ERRO##### {titulo_capitulo}"
-                    capitulo = capitulo.replace("/", "_")
-
-                # Criando arquivo com número do capítulo e nome
-                with open(f"{caminho}{capitulo} - {titulo_nome}.txt", "w", encoding="utf-8") as arquivo:
-                    arquivo.write(titulo_capitulo)
-                    arquivo.write("\n")
-                    arquivo.write(titulo_nome)
-                    arquivo.write("\n\n")
-
-                # classe da sessão de texto do capitulo = epcontent entry-content
-                # 1. Pegar apenas a parte de sessão de conteudo
-                content_html = soup.find("div", {"class": "epcontent entry-content"})
-                
-                # Criando loop para armazenar cada parágrafo dentro do arquivo criado
-                for paragrafo in content_html.find_all("p"):
-                    with open(
-                        f"{caminho}{capitulo} - {titulo_nome}.txt", "a", encoding="utf-8"
-                    ) as arquivo:
-                        arquivo.write(paragrafo.get_text())
-                        arquivo.write("\n\n")
+                    print(
+                        f"Nome do capítulo não encontrado: {url_completa}"
+                    )
             else:
-                print(f"Nome do capítulo não encontrado: {url_completa}")
-                # Ou pode apenas passar para o próximo capítulo, sem fazer nada
-                pass
+                print(
+                    f"Título do capítulo não encontrado: {url_completa}"
+                )
 
-        else:
-            print(f"Título do capítulo não encontrado: {url_completa}")
-            # Ou pode apenas passar para o próximo capítulo, sem fazer nada
-            pass
+        except requests.exceptions.HTTPError as err:
+            print(f"Não localizado: {cap_inicial}, Erro: {err}")
 
-    # Tratando exceção no caso da URL não encontrada
-    except requests.exceptions.HTTPError as err:
-        # Caso ocorra um erro HTTP (por exemplo, 404), a URL não existe
-        # Imprimindo mensagem informando que o capítulo não existe
-        print(f"Não localizado : {cap_inicial}")
-        print(f"Erro: {err}")
-
-        # Passando para o próximo incremento
-        pass
-
-    # Incrementando capitulo
-    capitulo_inicial += 1
+        capitulo_inicial += 1
