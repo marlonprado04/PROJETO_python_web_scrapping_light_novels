@@ -4,6 +4,7 @@ function downloadCapitulos(event) {
     const url = document.getElementById('url').value;
     const capituloInicial = document.getElementById('capituloInicial').value;
     const capituloFinal = document.getElementById('capituloFinal').value;
+    const caminho = document.getElementById('caminho').value; // Coleta o caminho do input
     const output = document.getElementById('output');
     
     output.innerHTML = "<li>Iniciando download...</li>";
@@ -16,7 +17,8 @@ function downloadCapitulos(event) {
         body: JSON.stringify({
             url: url,
             capituloInicial: capituloInicial,
-            capituloFinal: capituloFinal
+            capituloFinal: capituloFinal,
+            caminho: caminho // Adiciona o caminho no corpo da requisição
         })
     })
     .then(response => {
