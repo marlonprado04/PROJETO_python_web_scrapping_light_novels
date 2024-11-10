@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download de Capítulos</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Download de Capítulos</h1>
+        <form id="formDownload" onsubmit="enviarFormulario(event)">
+            <label for="url">URL Base:</label>
+            <input type="text" id="url" name="url" value="https://centralnovel.com/shadow-slave-capitulo-" required>
+
+            <label for="capituloInicial">Capítulo Inicial:</label>
+            <input type="number" id="capituloInicial" name="capituloInicial" required>
+
+            <label for="capituloFinal">Capítulo Final:</label>
+            <input type="number" id="capituloFinal" name="capituloFinal" required>
+
+            <label for="caminho">Caminho para Salvar (ex: ./capitulos/):</label>
+            <input type="text" id="caminho" name="caminho" value="./" required>
+
+            <button type="submit">Baixar</button>
+        </form>
+
+        <ul id="output"></ul>
+    </div>
+
+    <script>
+        async function enviarFormulario(event) {
+            event.preventDefault();  // Previne o envio padrão do formulário
+
+            const urlBase = document.getElementById('url').value;
+            const capituloInicial = parseInt(document.getElementById('capituloInicial').value);
+            const capituloFinal = parseInt(document.getElementById('capituloFinal').value);
+            const caminho = document.getElementById('caminho').value;
+
+            // Mensagens de status
+            const output = document.getElementById('output');
+            output.innerHTML = '';  // Limpa a lista de status
+
+            try {
+                // Envia dados para o servidor (via POST)
+                const response = await fetch('/baixar-capitulos', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        urlBase,
+                        capituloInicial,
+                        capituloFinal,
+                        caminho,
+                    }),
+                });
+
+                if (!response.ok) {
+                    throw new Error('Falha ao iniciar o download no servidor');
+                }
+
+                // Recebe o progresso do servidor
+                const data = await response.json();
+
+                // Exibe os status de download
+                data.status.forEach(item => {
+                    const li = document.createElement('li');
+                    li.textContent = item;
+                    output.appendChild(li);
+                });
+
+            } catch (error) {
+                console.error('Erro:', error);
+                const li = document.createElement('li');
+                li.textContent = 'Erro ao conectar com o servidor.';
+                output.appendChild(li);
+            }
+        }
+    </script>
+</body>
+</html>
