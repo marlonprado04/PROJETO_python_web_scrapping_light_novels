@@ -1,7 +1,7 @@
 import os
 
 # Solicita o caminho da pasta
-pasta = input("Digite o caminho da pasta: ").strip()  # Remove possíveis espaços em branco
+pasta = input("Digite o caminho da pasta onde os arquivos estão: ").strip() 
 nome_arquivo = input("Digite o nome do arquivo unificado: ")
 
 # Converte para caminho absoluto para evitar problemas
@@ -20,6 +20,9 @@ else:
     print("Arquivos .txt encontrados:", arquivos_txt)  # Verificação extra para depuração
     arquivos_txt.sort()  # Ordena os arquivos
 
+    # Armazena a quantidade de arquivos
+    qtd_arquivos = 0
+    
     # Verifica se há arquivos .txt na pasta
     if not arquivos_txt:
         print("Não foram encontrados arquivos .txt na pasta.")
@@ -30,6 +33,8 @@ else:
         # Abre o arquivo de saída em modo de escrita
         with open(arquivo_saida, "w", encoding="utf-8") as saida:
             for arquivo_txt in arquivos_txt:
+                # Incrementa quantidade de arquivos
+                qtd_arquivos +=1
                 # Abre cada arquivo .txt da pasta em modo de leitura
                 with open(os.path.join(caminho_absoluto, arquivo_txt), "r", encoding="utf-8", errors="ignore") as arquivo:
                     # Lê o conteúdo do arquivo e escreve no arquivo de saída
@@ -37,4 +42,4 @@ else:
                     saida.write(conteudo)
                 # Adiciona uma quebra de linha entre os arquivos
                 saida.write("\n")
-        print(f"Arquivos unificados com sucesso em '{arquivo_saida}'.")
+        print(f"{qtd_arquivos} arquivos unificados com sucesso em '{arquivo_saida}'.")
