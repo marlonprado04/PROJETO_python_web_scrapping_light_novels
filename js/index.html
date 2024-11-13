@@ -51,81 +51,72 @@
     </div>
 
     <script>
-        async function enviarFormulario(event) {
-            event.preventDefault();
+    async function enviarFormulario(event) {
+    event.preventDefault();
 
-            const urlBase = document.getElementById('url').value;
-            const capituloInicial = parseInt(document.getElementById('capituloInicial').value);
-            const capituloFinal = parseInt(document.getElementById('capituloFinal').value);
-            const caminho = document.getElementById('caminho').value;
+    const urlBase = document.getElementById('url').value;
+    const capituloInicial = parseInt(document.getElementById('capituloInicial').value);
+    const capituloFinal = parseInt(document.getElementById('capituloFinal').value);
 
-            const output = document.getElementById('output');
-            output.innerHTML = '';  // Limpa a lista de status
+    const output = document.getElementById('output');
+    output.innerHTML = '';  // Limpa a lista de status
 
-            const progressBar = document.getElementById('progressBar');
-            const totalCapitulos = capituloFinal - capituloInicial + 1;
-            let capitulosBaixados = 0;
+    const progressBar = document.getElementById('progressBar');
+    const totalCapitulos = capituloFinal - capituloInicial + 1;
+    let capitulosBaixados = 0;
 
-            try {
-                // Envia dados para o servidor e começa a receber status progressivo
-                const response = await fetch('https://download-novel.vercel.app/baixar-capitulos', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-        urlBase,
-        capituloInicial,
-        capituloFinal,
-        caminho,
-    }),
-});
+    try {
+        // Envia dados para o servidor
+        const response = await fetch('https://download-novel.vercel.app/api/baixar-capitulos', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                urlBase,
+                capituloInicial,
+                capituloFinal,
+            }),
+        });
 
-                if (!response.ok) {
-                 console.error('Erro:', response.statusText);
-                 throw new Error('Erro ao iniciar o download no servidor');
-}
+        if (!response.ok) throw new Error('Erro ao iniciar o download no servidor');
 
-                // Processa cada linha de status do servidor
-                const reader = response.body.getReader();
-                const decoder = new TextDecoder();
-                let done, value;
-                let text = '';
+        const { status, capitulos } = await response.json();
 
-                while ({ done, value } = await reader.read()) {
-                    text += decoder.decode(value, { stream: !done });
+        // Exibe status e salva cada capítulo
+        status.forEach(line => {
+            const li = document.createElement('li');
+            li.textContent = line;
+            output.appendChild(li);
+        });
 
-                    // Divide as mensagens de status
-                    const lines = text.split('\n');
-                    text = lines.pop();  // Deixa a última parte para a próxima iteração
+        // Baixa cada capítulo no computador do usuário
+        for (const { capitulo, content } of capitulos) {
+            const blob = new Blob([content], { type: 'text/plain' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `Capitulo_${capitulo}.txt`;
+            link.click();
 
-                    lines.forEach(line => {
-                        const li = document.createElement('li');
-                        li.textContent = line;
-                        output.appendChild(li);
-
-                        // Atualiza a barra de progresso se o capítulo foi baixado com sucesso
-                        if (line.includes('Baixado:')) {
-                            capitulosBaixados++;
-                            const progress = (capitulosBaixados / totalCapitulos) * 100;
-                            progressBar.style.width = `${progress}%`;
-                            progressBar.textContent = `${Math.round(progress)}%`;
-                        }
-                    });
-                }
-
-                // Mensagem final quando todos os capítulos forem baixados
-                const li = document.createElement('li');
-                li.textContent = 'Todos os capítulos foram baixados com sucesso!';
-                output.appendChild(li);
-
-            } catch (error) {
-                console.error('Erro:', error);
-                const li = document.createElement('li');
-                li.textContent = 'Erro ao conectar com o servidor.';
-                output.appendChild(li);
-            }
+            // Atualiza a barra de progresso
+            capitulosBaixados++;
+            const progress = (capitulosBaixados / totalCapitulos) * 100;
+            progressBar.style.width = `${progress}%`;
+            progressBar.textContent = `${Math.round(progress)}%`;
         }
+
+        // Mensagem final
+        const li = document.createElement('li');
+        li.textContent = 'Todos os capítulos foram baixados com sucesso!';
+        output.appendChild(li);
+
+    } catch (error) {
+        console.error('Erro:', error);
+        const li = document.createElement('li');
+        li.textContent = 'Erro ao conectar com o servidor.';
+        output.appendChild(li);
+    }
+}
     </script>
 </body>
 </html>
