@@ -53,13 +53,12 @@
 
             try {
                 // Fazendo a requisição para o backend
-                const response = await fetch("/download", {
+                const response = await fetch(window.location.origin + "/download", {
                     method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
+                    headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(data)
                 });
+                
 
                 const result = await response.json();
 
