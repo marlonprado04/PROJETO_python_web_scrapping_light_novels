@@ -1,24 +1,12 @@
 import fetch from 'node-fetch';
 import { parse } from 'node-html-parser';
-import cors from 'cors';
 
 const corsOptions = {
     origin: 'https://projetos.marlonprado.com.br',
-    methods: ['POST']
+    methods: ['POST'],
 };
 
-function runMiddleware(req, res, fn) {
-    return new Promise((resolve, reject) => {
-        fn(req, res, (result) => {
-            if (result instanceof Error) {
-                return reject(result);
-            }
-            return resolve(result);
-        });
-    });
-}
-
-const downloadCapitulo = async (urlBase, numeroCapitulo) => {
+async function downloadCapitulo(urlBase, numeroCapitulo) {
     const capStr = numeroCapitulo.toString().includes(".5")
         ? numeroCapitulo.toString().replace(".5", "-")
         : numeroCapitulo.toString().replace(".0", "");
@@ -58,17 +46,22 @@ const downloadCapitulo = async (urlBase, numeroCapitulo) => {
         status.push(`Não localizado: ${capStr}, Erro: ${error.message}`);
         return { status, content: null };
     }
-};
+}
 
 export default async function handler(req, res) {
-    await runMiddleware(req, res, cors(corsOptions));
+    // CORS
+    res.setHeader('Access-Control-Allow-Origin', corsOptions.origin);
+    res.setHeader('Access-Control-Allow-Methods', corsOptions.methods.join(', '));
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
+    // Verifica se a requisição é POST
     if (req.method === "POST") {
         const { urlBase, capituloInicial, capituloFinal } = req.body;
         let capAtual = capituloInicial;
         const status = [];
         const capitulos = [];
 
+        // Baixa os capítulos
         while (capAtual <= capituloFinal) {
             const { status: chapterStatus, content } = await downloadCapitulo(urlBase, capAtual);
             status.push(...chapterStatus);
@@ -78,8 +71,9 @@ export default async function handler(req, res) {
             capAtual++;
         }
 
-        res.json({ status, capitulos });
+        res.status(200).json({ status, capitulos });
     } else {
+        // Responde com erro para outros métodos HTTP
         res.status(405).json({ message: 'Método não permitido' });
     }
 }
