@@ -4,7 +4,12 @@ import fs from 'fs-extra';
 import { parse } from 'node-html-parser';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import cors from 'cors';
 
+// Habilita acesso do domínio ao backend
+app.use(cors({ origin: 'https://marlonprado.com.br'}));
+
+// Define porta do express
 const app = express();
 const port = 3000;
 
