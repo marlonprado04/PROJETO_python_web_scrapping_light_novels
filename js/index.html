@@ -81,7 +81,10 @@
     }),
 });
 
-                if (!response.ok) throw new Error('Erro ao iniciar o download no servidor');
+                if (!response.ok) {
+                 console.error('Erro:', response.statusText);
+                 throw new Error('Erro ao iniciar o download no servidor');
+
 
                 // Processa cada linha de status do servidor
                 const reader = response.body.getReader();
