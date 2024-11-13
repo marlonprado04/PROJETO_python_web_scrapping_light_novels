@@ -77,5 +77,9 @@ def download_capitulos():
 def index():
     return render_template('index.html')
 
+# Para o Vercel identificar o ponto de entrada
+app = app
+
+# Mantém a possibilidade de executar localmente
 if __name__ == "__main__":
     app.run(debug=True)
