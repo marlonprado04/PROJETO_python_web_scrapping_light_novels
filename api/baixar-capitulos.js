@@ -1,6 +1,4 @@
-import fetch from 'node-fetch';
 import { parse } from 'node-html-parser';
-
 
 async function downloadCapitulo(urlBase, numeroCapitulo) {
     const capStr = numeroCapitulo.toString().includes(".5")
@@ -12,6 +10,8 @@ async function downloadCapitulo(urlBase, numeroCapitulo) {
     let content = "";
 
     try {
+        const fetch = (await import('node-fetch')).default;
+
         const response = await fetch(urlCompleta);
         if (!response.ok) throw new Error(`Erro HTTP: ${response.status}`);
 
