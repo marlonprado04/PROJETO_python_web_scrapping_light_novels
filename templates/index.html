@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download de Capítulos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Download de Capítulos</h1>
+        <form id="formDownload" onsubmit="enviarFormulario(event)">
+            <label for="url">URL Base:</label>
+            <input type="text" id="url" name="url" value="https://centralnovel.com/shadow-slave-capitulo-" required>
+
+            <label for="capituloInicial">Capítulo Inicial:</label>
+            <input type="number" id="capituloInicial" name="capituloInicial" required>
+
+            <label for="capituloFinal">Capítulo Final:</label>
+            <input type="number" id="capituloFinal" name="capituloFinal" required>
+
+            <label for="caminho">Caminho para Salvar (ex: ./capitulos/):</label>
+            <input type="text" id="caminho" name="caminho" value="./" required>
+
+            <button type="submit">Baixar</button>
+        </form>
+
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar">0%</div>
+        </div>
+        <ul id="output"></ul>
+    </div>
+
+    <script>
+        async function enviarFormulario(event) {
+            event.preventDefault();
+
+            // Coletando os dados do formulário
+            const urlBase = document.getElementById("url").value;
+            const capituloInicial = document.getElementById("capituloInicial").value;
+            const capituloFinal = document.getElementById("capituloFinal").value;
+            const caminho = document.getElementById("caminho").value;
+
+            const data = {
+                url: urlBase,
+                capituloInicial: capituloInicial,
+                capituloFinal: capituloFinal,
+                caminho: caminho
+            };
+
+            // Desabilitando o botão enquanto o download é feito
+            document.querySelector("button").disabled = true;
+
+            try {
+                // Fazendo a requisição para o backend
+                const response = await fetch("/download", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (result.status === "success") {
+                    const output = document.getElementById("output");
+                    result.capitulos.forEach(capitulo => {
+                        const li = document.createElement("li");
+                        li.textContent = `Baixado: ${capitulo}`;
+                        output.appendChild(li);
+                    });
+                } else {
+                    alert("Erro ao baixar os capítulos.");
+                }
+
+            } catch (error) {
+                console.error("Erro:", error);
+                alert("Erro ao se comunicar com o servidor.");
+            } finally {
+                // Habilitar o botão novamente
+                document.querySelector("button").disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>
