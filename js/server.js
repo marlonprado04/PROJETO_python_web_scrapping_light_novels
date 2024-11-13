@@ -1,9 +1,9 @@
 import express from 'express';
-import fetch from 'node-fetch';  // Usando import para o node-fetch
-import fs from 'fs-extra';       // Usando import para fs-extra
-import { parse } from 'node-html-parser';  // Usando import para node-html-parser
-import path from 'path';  // Para manipular caminhos de arquivos
-import { fileURLToPath } from 'url';  // Para converter URL para caminho de arquivo
+import fetch from 'node-fetch';
+import fs from 'fs-extra';
+import { parse } from 'node-html-parser';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 const app = express();
 const port = 3000;
@@ -12,18 +12,18 @@ const port = 3000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Middleware para permitir parsing de JSON no corpo da requisição
 app.use(express.json());
-app.use(express.static(__dirname)); // Serve arquivos estáticos da pasta atual
+app.use(express.static(__dirname)); 
 
-// Função para fazer o download de cada capítulo
-const downloadCapitulo = async (urlBase, numeroCapitulo, caminho) => {
+// Função para fazer o download de cada capítulo e salvar como arquivos de texto
+const downloadCapitulo = async (urlBase, numeroCapitulo) => {
   const capStr = numeroCapitulo.toString().includes(".5")
     ? numeroCapitulo.toString().replace(".5", "-")
     : numeroCapitulo.toString().replace(".0", "");
 
   const urlCompleta = `${urlBase}${capStr}`;
   const status = [];
+  const filePaths = [];
 
   try {
     const response = await fetch(urlCompleta);
@@ -35,14 +35,14 @@ const downloadCapitulo = async (urlBase, numeroCapitulo, caminho) => {
     const tituloCapituloElement = root.querySelector("h1.entry-title");
     if (!tituloCapituloElement) {
       status.push(`Título do capítulo não encontrado: ${urlCompleta}`);
-      return status;
+      return { status, filePaths };
     }
 
     const tituloCapitulo = tituloCapituloElement.text;
     const tituloNomeElement = root.querySelector("div.cat-series");
     if (!tituloNomeElement) {
       status.push(`Nome do capítulo não encontrado: ${urlCompleta}`);
-      return status;
+      return { status, filePaths };
     }
 
     const tituloNome = tituloNomeElement.text
@@ -63,42 +63,50 @@ const downloadCapitulo = async (urlBase, numeroCapitulo, caminho) => {
           .map((p) => p.text)
           .join("\n\n");
 
-        // Cria o caminho completo do arquivo
-        const caminhoCompleto = `${caminho}/${capituloNome} - ${tituloNome}.txt`;
+        const caminhoCompleto = path.join(__dirname, req.body.caminho, `${capituloNome} - ${tituloNome}.txt`);
 
-        // Cria o arquivo com o conteúdo do capítulo
-        await fs.outputFile(
-          caminhoCompleto,
-          `${tituloCapitulo}\n${tituloNome}\n\n${content}`
-        );
+        const dirPath = path.dirname(caminhoCompleto);
+        await fs.ensureDir(dirPath);  // Garante que o diretório exista
+        await fs.outputFile(caminhoCompleto, `${tituloCapitulo}\n${tituloNome}\n\n${content}`);
+
+
         status.push(`Baixado: ${capituloNome} - ${tituloNome}`);
+        filePaths.push(caminhoCompleto);
       }
     } else {
       status.push(`#####ERRO##### ${tituloCapitulo}`);
     }
   } catch (error) {
+    console.error(`Erro ao baixar o capítulo ${numeroCapitulo}:`, error);
     status.push(`Não localizado: ${capStr}, Erro: ${error.message}`);
   }
 
-  return status;
+  return { status, filePaths };
 };
 
 // Endpoint para processar os downloads
 app.post("/baixar-capitulos", async (req, res) => {
-  const { urlBase, capituloInicial, capituloFinal, caminho } = req.body;
+  const { urlBase, capituloInicial, capituloFinal } = req.body;
   let capAtual = capituloInicial;
   const status = [];
+  const filePaths = [];
 
+  res.setHeader('Content-Type', 'text/plain');
+  
+  // Baixa cada capítulo e gera os arquivos de texto
   while (capAtual <= capituloFinal) {
-    const chapterStatus = await downloadCapitulo(urlBase, capAtual, caminho);
-    status.push(...chapterStatus);
-    capAtual += 1;
+    const { status: chapterStatus, filePaths: chapterFilePaths } = await downloadCapitulo(urlBase, capAtual);
+    chapterStatus.forEach(s => res.write(s + '\n')); // Envia cada status progressivamente
+    filePaths.push(...chapterFilePaths);
+    capAtual++;
   }
 
-  res.json({ status });
+  res.write('Todos os capítulos foram baixados com sucesso!\n');
+  
+  // Limpeza dos arquivos após o envio
+  filePaths.forEach(filePath => fs.removeSync(filePath));
 });
 
-// Inicia o servidor
 app.listen(port, () => {
   console.log(`Servidor rodando na porta ${port}`);
 });

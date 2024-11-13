@@ -7,8 +7,9 @@
   },
   "dependencies": {
     "express": "^4.17.1",
-    "node-fetch": "^3.0.0",
     "fs-extra": "^10.0.0",
+    "js": "file:",
+    "node-fetch": "^3.0.0",
     "node-html-parser": "^5.0.0"
   }
 }

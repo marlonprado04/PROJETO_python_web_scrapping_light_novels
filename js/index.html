@@ -5,6 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Download de Capítulos</title>
     <link rel="stylesheet" href="./style.css">
+    <style>
+        .progress-container {
+            width: 100%;
+            background-color: #f3f3f3;
+            height: 30px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .progress-bar {
+            height: 100%;
+            width: 0;
+            background-color: #4caf50;
+            text-align: center;
+            color: white;
+            line-height: 30px;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -25,24 +43,31 @@
             <button type="submit">Baixar</button>
         </form>
 
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar">0%</div>
+        </div>
         <ul id="output"></ul>
+        
     </div>
 
     <script>
         async function enviarFormulario(event) {
-            event.preventDefault();  // Previne o envio padrão do formulário
+            event.preventDefault();
 
             const urlBase = document.getElementById('url').value;
             const capituloInicial = parseInt(document.getElementById('capituloInicial').value);
             const capituloFinal = parseInt(document.getElementById('capituloFinal').value);
             const caminho = document.getElementById('caminho').value;
 
-            // Mensagens de status
             const output = document.getElementById('output');
             output.innerHTML = '';  // Limpa a lista de status
 
+            const progressBar = document.getElementById('progressBar');
+            const totalCapitulos = capituloFinal - capituloInicial + 1;
+            let capitulosBaixados = 0;
+
             try {
-                // Envia dados para o servidor (via POST)
+                // Envia dados para o servidor e começa a receber status progressivo
                 const response = await fetch('/baixar-capitulos', {
                     method: 'POST',
                     headers: {
@@ -56,19 +81,40 @@
                     }),
                 });
 
-                if (!response.ok) {
-                    throw new Error('Falha ao iniciar o download no servidor');
+                if (!response.ok) throw new Error('Erro ao iniciar o download no servidor');
+
+                // Processa cada linha de status do servidor
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+                let done, value;
+                let text = '';
+
+                while ({ done, value } = await reader.read()) {
+                    text += decoder.decode(value, { stream: !done });
+
+                    // Divide as mensagens de status
+                    const lines = text.split('\n');
+                    text = lines.pop();  // Deixa a última parte para a próxima iteração
+
+                    lines.forEach(line => {
+                        const li = document.createElement('li');
+                        li.textContent = line;
+                        output.appendChild(li);
+
+                        // Atualiza a barra de progresso se o capítulo foi baixado com sucesso
+                        if (line.includes('Baixado:')) {
+                            capitulosBaixados++;
+                            const progress = (capitulosBaixados / totalCapitulos) * 100;
+                            progressBar.style.width = `${progress}%`;
+                            progressBar.textContent = `${Math.round(progress)}%`;
+                        }
+                    });
                 }
 
-                // Recebe o progresso do servidor
-                const data = await response.json();
-
-                // Exibe os status de download
-                data.status.forEach(item => {
-                    const li = document.createElement('li');
-                    li.textContent = item;
-                    output.appendChild(li);
-                });
+                // Mensagem final quando todos os capítulos forem baixados
+                const li = document.createElement('li');
+                li.textContent = 'Todos os capítulos foram baixados com sucesso!';
+                output.appendChild(li);
 
             } catch (error) {
                 console.error('Erro:', error);

@@ -18,6 +18,11 @@ caminho = input(
     "Digite o caminho onde deseja salvar os arquivos (ex: ./, /, ./capitulos/): "
 )
 
+def limpar_nome_arquivo(nome):
+    # Substitui caracteres indesejados por um espaço ou nada
+    return nome.replace("/", "_").replace("?", "").replace("\n", " ").replace(":", " -").strip()
+
+
 # Criando laço de repetição para executar o código em loop
 while capitulo_inicial <= capitulo_final:
         cap_inicial = (
@@ -39,17 +44,15 @@ while capitulo_inicial <= capitulo_final:
                 titulo_capitulo = titulo_capitulo_element.get_text()
                 titulo_nome_element = soup.find("div", {"class": "cat-series"})
                 if titulo_nome_element:
-                    titulo_nome = (
-                        titulo_nome_element.get_text()
-                        .replace("/", "_")
-                        .replace("?", "")
-                    )
+                    titulo_nome = limpar_nome_arquivo(titulo_nome_element.get_text())
+
                     indice = titulo_capitulo.find("Capítulo")
 
                     if indice != -1:
                         capitulo = titulo_capitulo[indice:].replace("/", "_")
                         numero_capitulo = capitulo.replace("Capítulo", "").strip()
-                        capitulo = f"Capítulo {numero_capitulo.zfill(3)}"
+                        capitulo = limpar_nome_arquivo(f"Capítulo {numero_capitulo.zfill(5)}")
+
 
                         with open(
                             f"{caminho}{capitulo} - {titulo_nome}.txt",
