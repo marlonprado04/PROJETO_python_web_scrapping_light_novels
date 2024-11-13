@@ -68,18 +68,18 @@
 
             try {
                 // Envia dados para o servidor e começa a receber status progressivo
-                const response = await fetch('/baixar-capitulos', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        urlBase,
-                        capituloInicial,
-                        capituloFinal,
-                        caminho,
-                    }),
-                });
+                const response = await fetch('https://download-novel.vercel.app/baixar-capitulos', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+        urlBase,
+        capituloInicial,
+        capituloFinal,
+        caminho,
+    }),
+});
 
                 if (!response.ok) throw new Error('Erro ao iniciar o download no servidor');
 
