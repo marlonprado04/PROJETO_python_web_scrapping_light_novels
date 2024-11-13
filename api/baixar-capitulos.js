@@ -1,10 +1,6 @@
 import fetch from 'node-fetch';
 import { parse } from 'node-html-parser';
 
-const corsOptions = {
-    origin: 'https://projetos.marlonprado.com.br',
-    methods: ['POST'],
-};
 
 async function downloadCapitulo(urlBase, numeroCapitulo) {
     const capStr = numeroCapitulo.toString().includes(".5")
@@ -49,11 +45,6 @@ async function downloadCapitulo(urlBase, numeroCapitulo) {
 }
 
 export default async function handler(req, res) {
-    // CORS
-    res.setHeader('Access-Control-Allow-Origin', corsOptions.origin);
-    res.setHeader('Access-Control-Allow-Methods', corsOptions.methods.join(', '));
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-
     // Verifica se a requisição é POST
     if (req.method === "POST") {
         const { urlBase, capituloInicial, capituloFinal } = req.body;
