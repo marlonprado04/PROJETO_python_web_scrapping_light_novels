@@ -4,7 +4,7 @@
   "description": "Projeto para baixar capítulos de novelas",
   "main": "index.js",
   "scripts": {
-    "start": "vercel dev"  // Para rodar o projeto localmente com Vercel
+    "start": "vercel dev"
   },
   "dependencies": {
     "node-fetch": "^2.6.1",
@@ -13,6 +13,6 @@
     "cors": "^2.8.5"
   },
   "devDependencies": {
-    "vercel": "^28.0.0"  // Inclua o Vercel CLI como dependência para deploy e testes locais
-  }
+    "vercel": "^28.0.0"
+}
 }
