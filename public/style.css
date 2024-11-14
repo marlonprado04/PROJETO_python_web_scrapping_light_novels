@@ -23,6 +23,18 @@ form {
     flex-direction: column;
 }
 
+fieldset {
+    border: 2px solid #ddd;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+legend {
+    font-weight: bold;
+    padding: 0 10px;
+}
+
 label {
     margin-top: 10px;
 }
@@ -64,23 +76,7 @@ pre {
     margin: 20px 0;
     border-radius: 5px;
 }
-.progress-bar {
-    height: 100%;
-    width: 0;
-    background-color: #4caf50;
-    text-align: center;
-    color: white;
-    line-height: 30px;
-    border-radius: 5px;
-}
 
-.progress-container {
-    width: 100%;
-    background-color: #f3f3f3;
-    height: 30px;
-    margin: 20px 0;
-    border-radius: 5px;
-}
 .progress-bar {
     height: 100%;
     width: 0;

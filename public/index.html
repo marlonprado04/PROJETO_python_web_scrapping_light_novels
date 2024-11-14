@@ -10,20 +10,21 @@
     <div class="container">
         <h1>Download de Capítulos</h1>
         <form id="formDownload" onsubmit="enviarFormulario(event)">
-            <label for="url">URL Base:</label>
-            <input type="text" id="url" name="url" value="https://centralnovel.com/shadow-slave-capitulo-" required>
+            <fieldset>
+                <legend>Informações do Download</legend>
+                
+                <label for="url">URL Base:</label>
+                <input type="text" id="url" name="url" value="https://centralnovel.com/shadow-slave-capitulo-" required>
 
-            <label for="capituloInicial">Capítulo Inicial:</label>
-            <input type="number" id="capituloInicial" name="capituloInicial" required>
+                <label for="capituloInicial">Capítulo Inicial:</label>
+                <input type="number" id="capituloInicial" name="capituloInicial" required>
 
-            <label for="capituloFinal">Capítulo Final:</label>
-            <input type="number" id="capituloFinal" name="capituloFinal" required>
+                <label for="capituloFinal">Capítulo Final:</label>
+                <input type="number" id="capituloFinal" name="capituloFinal" required>
 
-            <label for="caminho">Caminho para Salvar (ex: ./capitulos/):</label>
-            <input type="text" id="caminho" name="caminho" value="./" required>
-
-            <label for="downloadZip">Baixar como ZIP:</label>
-            <input type="checkbox" id="downloadZip" name="downloadZip">
+                <label for="downloadZip">Baixar como ZIP:</label>
+                <input type="checkbox" id="downloadZip" name="downloadZip">
+            </fieldset>
 
             <button type="submit">Baixar</button>
         </form>
@@ -78,44 +79,54 @@
 
             // Função para salvar os capítulos como arquivos individuais
             const salvarCapitulosIndividuais = (capitulos) => {
-                for (const { capitulo, content } of capitulos) {
-                    const nomeArquivo = `Capitulo ${String(capitulo).padStart(5, '0')} - ${content.split('\n')[0]}.txt`;
-                    const blob = new Blob([content], { type: 'text/plain' });
-                    const link = document.createElement('a');
-                    link.href = URL.createObjectURL(blob);
-                    link.download = nomeArquivo;
-                    link.click();
+                return new Promise((resolve, reject) => {
+                    for (const { capitulo, content } of capitulos) {
+                        const nomeArquivo = `Capitulo ${String(capitulo).padStart(5, '0')} - ${content.split('\n')[0]}.txt`;
+                        const blob = new Blob([content], { type: 'text/plain' });
+                        const link = document.createElement('a');
+                        link.href = URL.createObjectURL(blob);
+                        link.download = nomeArquivo;
+                        link.click();
 
-                    // Atualiza a barra de progresso
-                    capitulosBaixados++;
-                    const progress = (capitulosBaixados / totalCapitulos) * 100;
-                    progressBar.style.width = `${progress}%`;
-                    progressBar.textContent = `${Math.round(progress)}%`;
-                }
+                        // Atualiza a barra de progresso
+                        capitulosBaixados++;
+                        const progress = (capitulosBaixados / totalCapitulos) * 100;
+                        progressBar.style.width = `${progress}%`;
+                        progressBar.textContent = `${Math.round(progress)}%`;
+
+                        // Se todos os capítulos foram baixados, resolve a promessa
+                        if (capitulosBaixados === totalCapitulos) {
+                            resolve();
+                        }
+                    }
+                });
             };
 
             // Função para salvar como arquivo ZIP
             const salvarComoZip = (capitulos) => {
-                const zip = new JSZip();
-                for (const { capitulo, content } of capitulos) {
-                    const nomeArquivo = `Capitulo ${String(capitulo).padStart(5, '0')} - ${content.split('\n')[0]}.txt`;
-                    zip.file(nomeArquivo, content);
-                }
+                return new Promise((resolve, reject) => {
+                    const zip = new JSZip();
+                    for (const { capitulo, content } of capitulos) {
+                        const nomeArquivo = `Capitulo ${String(capitulo).padStart(5, '0')} - ${content.split('\n')[0]}.txt`;
+                        zip.file(nomeArquivo, content);
+                    }
 
-                // Gera o arquivo ZIP
-                zip.generateAsync({ type: "blob" }).then(function(content) {
-                    const link = document.createElement('a');
-                    link.href = URL.createObjectURL(content);
-                    link.download = "capitulos.zip";
-                    link.click();
+                    // Gera o arquivo ZIP
+                    zip.generateAsync({ type: "blob" }).then(function(content) {
+                        const link = document.createElement('a');
+                        link.href = URL.createObjectURL(content);
+                        link.download = "capitulos.zip";
+                        link.click();
+                        resolve();
+                    });
                 });
             };
 
             // Salva capítulos como ZIP ou individualmente
             if (downloadZip) {
-                salvarComoZip(capitulos); // Baixar todos os capítulos como ZIP
+                await salvarComoZip(capitulos); // Baixar todos os capítulos como ZIP
             } else {
-                salvarCapitulosIndividuais(capitulos); // Baixar capítulos individualmente
+                await salvarCapitulosIndividuais(capitulos); // Baixar capítulos individualmente
             }
 
             // Mensagem final
