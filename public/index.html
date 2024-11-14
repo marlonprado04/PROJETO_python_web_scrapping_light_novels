@@ -1,32 +1,36 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Download de Capítulos</title>
     <link rel="stylesheet" href="./style.css">
 </head>
+
 <body>
     <div class="container">
         <h1>Download de Capítulos</h1>
         <form id="formDownload" onsubmit="enviarFormulario(event)">
-            <fieldset>
-                <legend>Informações do Download</legend>
-                
+            <div class="field">
                 <label for="url">URL Base:</label>
                 <input type="text" id="url" name="url" value="https://centralnovel.com/shadow-slave-capitulo-" required>
-
+            </div>
+            <div class="field">
                 <label for="capituloInicial">Capítulo Inicial:</label>
                 <input type="number" id="capituloInicial" name="capituloInicial" required>
+            </div>
 
+            <div class="field">
                 <label for="capituloFinal">Capítulo Final:</label>
                 <input type="number" id="capituloFinal" name="capituloFinal" required>
+            </div>
 
-                <label for="downloadZip">Baixar como ZIP:</label>
+            <div class="field zip-options">
                 <input type="checkbox" id="downloadZip" name="downloadZip">
-            </fieldset>
-
-            <button type="submit">Baixar</button>
+                <label id="labelDownloadZip" for="downloadZip">Baixar como ZIP</label>
+                <button type="submit">Baixar</button>
+            </div>
         </form>
 
         <div class="progress-container">
@@ -38,48 +42,44 @@
     <script src="https://cdn.jsdelivr.net/npm/jszip@3.7.1/dist/jszip.min.js"></script>
 
     <script>
-    async function enviarFormulario(event) {
-        event.preventDefault();
+        async function enviarFormulario(event) {
+            event.preventDefault();
 
-        const urlBase = document.getElementById('url').value;
-        const capituloInicial = parseInt(document.getElementById('capituloInicial').value);
-        const capituloFinal = parseInt(document.getElementById('capituloFinal').value);
-        const output = document.getElementById('output');
-        output.innerHTML = '';  // Limpa a lista de status
+            const urlBase = document.getElementById('url').value;
+            const capituloInicial = parseInt(document.getElementById('capituloInicial').value);
+            const capituloFinal = parseInt(document.getElementById('capituloFinal').value);
+            const output = document.getElementById('output');
+            output.innerHTML = '';  // Limpa a lista de status
 
-        const progressBar = document.getElementById('progressBar');
-        const totalCapitulos = capituloFinal - capituloInicial + 1;
-        let capitulosBaixados = 0;
-        const downloadZip = document.getElementById('downloadZip').checked;
+            const progressBar = document.getElementById('progressBar');
+            const totalCapitulos = capituloFinal - capituloInicial + 1;
+            let capitulosBaixados = 0;
+            const downloadZip = document.getElementById('downloadZip').checked;
 
-        try {
-            // Chama a API do backend
-            const response = await fetch('https://download-novel.vercel.app/api/baixar-capitulos', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    urlBase,
-                    capituloInicial,
-                    capituloFinal,
-                }),
-            });
+            try {
+                const response = await fetch('https://download-novel.vercel.app/api/baixar-capitulos', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        urlBase,
+                        capituloInicial,
+                        capituloFinal,
+                    }),
+                });
 
-            if (!response.ok) throw new Error('Erro ao iniciar o download no servidor');
+                if (!response.ok) throw new Error('Erro ao iniciar o download no servidor');
 
-            const { status, capitulos } = await response.json();
+                const { status, capitulos } = await response.json();
 
-            // Exibe status de cada capítulo
-            status.forEach(line => {
-                const li = document.createElement('li');
-                li.textContent = line;
-                output.appendChild(li);
-            });
+                status.forEach(line => {
+                    const li = document.createElement('li');
+                    li.textContent = line;
+                    output.appendChild(li);
+                });
 
-            // Função para salvar os capítulos como arquivos individuais
-            const salvarCapitulosIndividuais = (capitulos) => {
-                return new Promise((resolve, reject) => {
+                const salvarCapitulosIndividuais = async (capitulos) => {
                     for (const { capitulo, content } of capitulos) {
                         const nomeArquivo = `Capitulo ${String(capitulo).padStart(5, '0')} - ${content.split('\n')[0]}.txt`;
                         const blob = new Blob([content], { type: 'text/plain' });
@@ -88,59 +88,49 @@
                         link.download = nomeArquivo;
                         link.click();
 
-                        // Atualiza a barra de progresso
                         capitulosBaixados++;
                         const progress = (capitulosBaixados / totalCapitulos) * 100;
                         progressBar.style.width = `${progress}%`;
                         progressBar.textContent = `${Math.round(progress)}%`;
+                    }
+                };
 
-                        // Se todos os capítulos foram baixados, resolve a promessa
-                        if (capitulosBaixados === totalCapitulos) {
-                            resolve();
+                const salvarComoZip = (capitulos) => {
+                    return new Promise((resolve, reject) => {
+                        const zip = new JSZip();
+                        for (const { capitulo, content } of capitulos) {
+                            const nomeArquivo = `Capitulo ${String(capitulo).padStart(5, '0')} - ${content.split('\n')[0]}.txt`;
+                            zip.file(nomeArquivo, content);
                         }
-                    }
-                });
-            };
 
-            // Função para salvar como arquivo ZIP
-            const salvarComoZip = (capitulos) => {
-                return new Promise((resolve, reject) => {
-                    const zip = new JSZip();
-                    for (const { capitulo, content } of capitulos) {
-                        const nomeArquivo = `Capitulo ${String(capitulo).padStart(5, '0')} - ${content.split('\n')[0]}.txt`;
-                        zip.file(nomeArquivo, content);
-                    }
-
-                    // Gera o arquivo ZIP
-                    zip.generateAsync({ type: "blob" }).then(function(content) {
-                        const link = document.createElement('a');
-                        link.href = URL.createObjectURL(content);
-                        link.download = "capitulos.zip";
-                        link.click();
-                        resolve();
+                        zip.generateAsync({ type: "blob" }).then(function (content) {
+                            const link = document.createElement('a');
+                            link.href = URL.createObjectURL(content);
+                            link.download = "capitulos.zip";
+                            link.click();
+                            resolve();
+                        });
                     });
-                });
-            };
+                };
 
-            // Salva capítulos como ZIP ou individualmente
-            if (downloadZip) {
-                await salvarComoZip(capitulos); // Baixar todos os capítulos como ZIP
-            } else {
-                await salvarCapitulosIndividuais(capitulos); // Baixar capítulos individualmente
+                if (downloadZip) {
+                    await salvarComoZip(capitulos);
+                } else {
+                    await salvarCapitulosIndividuais(capitulos);
+                }
+
+                const li = document.createElement('li');
+                li.textContent = 'Todos os capítulos foram baixados com sucesso!';
+                output.appendChild(li);
+
+            } catch (error) {
+                console.error('Erro:', error);
+                const li = document.createElement('li');
+                li.textContent = 'Erro ao conectar com o servidor.';
+                output.appendChild(li);
             }
-
-            // Mensagem final
-            const li = document.createElement('li');
-            li.textContent = 'Todos os capítulos foram baixados com sucesso!';
-            output.appendChild(li);
-
-        } catch (error) {
-            console.error('Erro:', error);
-            const li = document.createElement('li');
-            li.textContent = 'Erro ao conectar com o servidor.';
-            output.appendChild(li);
         }
-    }
     </script>
 </body>
+
 </html>
