@@ -28,7 +28,7 @@
 
             <div class="field zip-options">
                 <input type="checkbox" id="downloadZip" name="downloadZip">
-                <label id="labelDownloadZip" for="downloadZip">Baixar como ZIP</label>
+                <label for="downloadZip">Baixar como ZIP</label>
                 <button type="submit">Baixar</button>
             </div>
         </form>
@@ -79,8 +79,10 @@
                     output.appendChild(li);
                 });
 
+                // Função para salvar capítulos individuais
                 const salvarCapitulosIndividuais = async (capitulos) => {
                     for (const { capitulo, content } of capitulos) {
+                        // Formatação do nome do arquivo
                         const nomeArquivo = `Capitulo ${String(capitulo).padStart(5, '0')} - ${content.split('\n')[0]}.txt`;
                         const blob = new Blob([content], { type: 'text/plain' });
                         const link = document.createElement('a');
@@ -95,10 +97,12 @@
                     }
                 };
 
+                // Função para salvar capítulos como ZIP
                 const salvarComoZip = (capitulos) => {
                     return new Promise((resolve, reject) => {
                         const zip = new JSZip();
                         for (const { capitulo, content } of capitulos) {
+                            // Formatação do nome do arquivo
                             const nomeArquivo = `Capitulo ${String(capitulo).padStart(5, '0')} - ${content.split('\n')[0]}.txt`;
                             zip.file(nomeArquivo, content);
                         }
@@ -113,6 +117,7 @@
                     });
                 };
 
+                // Verifica se deve salvar individualmente ou como ZIP
                 if (downloadZip) {
                     await salvarComoZip(capitulos);
                 } else {
