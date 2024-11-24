@@ -2,6 +2,7 @@
 from bs4 import BeautifulSoup
 import requests
 import re
+import os
 
 # Função para substituir ponto por traço no nome
 def substituir_ponto_por_traco(valor):
@@ -24,8 +25,12 @@ def verificar_existencia_url(url_completa):
 
 # Função principal para baixar capítulos
 def baixar_capitulos(capitulo_inicial, capitulo_final, caminho):
+    # Garante que o diretório existe
+    if not os.path.exists(caminho):
+        os.makedirs(caminho)
+        print(f"Pasta criada: {caminho}")
+    
     for capitulo in range(capitulo_inicial, capitulo_final + 1):
-        # Verifica se o capítulo principal existe
         cap_inicial = f"{capitulo}"
         cap_inicial = substituir_ponto_por_traco(cap_inicial)
         url_completa = f"{url}{cap_inicial}"
@@ -34,13 +39,11 @@ def baixar_capitulos(capitulo_inicial, capitulo_final, caminho):
             print(f"Tentando baixar: {cap_inicial}")
 
             try:
-                # Fazendo scraping da página
                 requisicao = requests.get(url_completa)
                 requisicao.raise_for_status()
                 html = requisicao.text
                 soup = BeautifulSoup(html, "html.parser")
 
-                # Encontrando título do capítulo
                 titulo_capitulo_element = soup.find("h1", {"class": "entry-title"})
                 if titulo_capitulo_element:
                     titulo_capitulo = titulo_capitulo_element.get_text()
@@ -48,12 +51,11 @@ def baixar_capitulos(capitulo_inicial, capitulo_final, caminho):
                     if titulo_nome_element:
                         titulo_nome = limpar_nome_arquivo(titulo_nome_element.get_text())
 
-                        numero_capitulo = str(capitulo).zfill(5)  # Formatação correta
+                        numero_capitulo = str(capitulo).zfill(5)
                         capitulo_nome = limpar_nome_arquivo(f"Capítulo {numero_capitulo}")
 
-                        # Salvando o conteúdo em arquivo
                         with open(
-                            f"{caminho}{capitulo_nome} - {titulo_nome}.txt",
+                            os.path.join(caminho, f"{capitulo_nome} - {titulo_nome}.txt"),
                             "w",
                             encoding="utf-8",
                         ) as arquivo:
@@ -75,9 +77,9 @@ def baixar_capitulos(capitulo_inicial, capitulo_final, caminho):
             except requests.exceptions.HTTPError as err:
                 print(f"Não localizado: {cap_inicial}, Erro: {err}")
         
-        # Agora verificar os subcapítulos consecutivos
+        # Subcapítulos
         subcapitulo = 2
-        while True:  # Loop para verificar os subcapítulos consecutivos
+        while True:
             cap_inicial = f"{capitulo}-{subcapitulo}"
             cap_inicial = substituir_ponto_por_traco(cap_inicial)
             url_completa = f"{url}{cap_inicial}"
@@ -86,13 +88,11 @@ def baixar_capitulos(capitulo_inicial, capitulo_final, caminho):
                 print(f"Tentando baixar: {cap_inicial}")
 
                 try:
-                    # Fazendo scraping da página
                     requisicao = requests.get(url_completa)
                     requisicao.raise_for_status()
                     html = requisicao.text
                     soup = BeautifulSoup(html, "html.parser")
 
-                    # Encontrando título do capítulo
                     titulo_capitulo_element = soup.find("h1", {"class": "entry-title"})
                     if titulo_capitulo_element:
                         titulo_capitulo = titulo_capitulo_element.get_text()
@@ -101,12 +101,11 @@ def baixar_capitulos(capitulo_inicial, capitulo_final, caminho):
                             titulo_nome = limpar_nome_arquivo(titulo_nome_element.get_text())
 
                             numero_capitulo = str(capitulo).zfill(5)
-                            numero_subcapitulo = str(subcapitulo).zfill(2)  # Formatação correta
+                            numero_subcapitulo = str(subcapitulo).zfill(2)
                             capitulo_nome = limpar_nome_arquivo(f"Capítulo {numero_capitulo}-{numero_subcapitulo}")
 
-                            # Salvando o conteúdo em arquivo
                             with open(
-                                f"{caminho}{capitulo_nome} - {titulo_nome}.txt",
+                                os.path.join(caminho, f"{capitulo_nome} - {titulo_nome}.txt"),
                                 "w",
                                 encoding="utf-8",
                             ) as arquivo:
@@ -128,12 +127,11 @@ def baixar_capitulos(capitulo_inicial, capitulo_final, caminho):
                 except requests.exceptions.HTTPError as err:
                     print(f"Não localizado: {cap_inicial}, Erro: {err}")
                 
-                # Avança para o próximo subcapítulo
                 subcapitulo += 1
             else:
                 print(f"Subcapítulo {cap_inicial} não encontrado, pulando...")
-                break  # Se o subcapítulo não existir, sai do loop de subcapítulos para esse capítulo
-
+                break
+                
 # Exemplo de uso
 capitulo_inicial = int(input("Desde qual capítulo deseja fazer download? "))
 capitulo_final = int(input("Até qual capítulo deseja fazer download? "))
