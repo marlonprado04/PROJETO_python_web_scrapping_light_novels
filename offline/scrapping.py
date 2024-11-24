@@ -1,19 +1,17 @@
 # Importando bibliotecas necessárias
 from bs4 import BeautifulSoup
 import requests
+import re
 
+def substituir_ponto_por_traco(valor):
+    return re.sub(r"\.(\d+)", r"-\1", str(valor))
+    
 # Criando variável para URL do site
-#url = "https://centralnovel.com/the-beginning-after-the-end-capitulo-"
-
-# URL para outra novel
-# Pode ser alterado para qualquer novel do site desde que respeite a estrutura padrão
-# url = "https://centralnovel.com/trash-of-the-counts-family-capitulo-"
-
-url = "https://centralnovel.com/shadow-slave-capitulo-"
+url = "https://centralnovel.com/the-beginning-after-the-end-capitulo-"
 
 # Criando variáveis para receber range de capítulos para download
-capitulo_inicial = float(input("Desde qual capítulo deseja fazer download? "))
-capitulo_final = float(input("Até qual capítulo deseja fazer download? "))
+capitulo_inicial = int(input("Desde qual capítulo deseja fazer download? "))
+capitulo_final = int(input("Até qual capítulo deseja fazer download? "))
 caminho = input(
     "Digite o caminho onde deseja salvar os arquivos (ex: ./, /, ./capitulos/): "
 )
@@ -22,14 +20,12 @@ def limpar_nome_arquivo(nome):
     # Substitui caracteres indesejados por um espaço ou nada
     return nome.replace("/", "_").replace("?", "").replace("\n", " ").replace(":", " -").strip()
 
-
 # Criando laço de repetição para executar o código em loop
 while capitulo_inicial <= capitulo_final:
-        cap_inicial = (
-            str(capitulo_inicial).replace(".5", "-")
-            if ".5" in str(capitulo_inicial)
-            else str(capitulo_inicial).replace(".0", "")
-        )
+    # Loop para subcapítulos (1 e 2, ajuste conforme necessário)
+    for subcapitulo in range(1, 4):
+        cap_inicial = f"{capitulo_inicial}-{subcapitulo}"
+        cap_inicial = substituir_ponto_por_traco(cap_inicial)
         url_completa = f"{url}{cap_inicial}"
         print(f"Tentando baixar: {cap_inicial}")
 
@@ -52,7 +48,6 @@ while capitulo_inicial <= capitulo_final:
                         capitulo = titulo_capitulo[indice:].replace("/", "_")
                         numero_capitulo = capitulo.replace("Capítulo", "").strip()
                         capitulo = limpar_nome_arquivo(f"Capítulo {numero_capitulo.zfill(5)}")
-
 
                         with open(
                             f"{caminho}{capitulo} - {titulo_nome}.txt",
@@ -83,4 +78,4 @@ while capitulo_inicial <= capitulo_final:
         except requests.exceptions.HTTPError as err:
             print(f"Não localizado: {cap_inicial}, Erro: {err}")
 
-        capitulo_inicial += 1
+    capitulo_inicial += 1 
