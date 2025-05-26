@@ -1,1 +1,28 @@
 .vercel
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+
+# Electron build output
+dist/
+build/
+*.exe
+*.dmg
+*.app
+*.asar
+
+# Arquivos temporários e de cache
+*.zip
+*.tmp
+.DS_Store
+Thumbs.db
+
+# VSCode e sistema operacional
+.vscode/
+*.swp
+
+# Pastas de downloads do app
+electron-version/public/downloads/
