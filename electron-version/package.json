@@ -23,6 +23,8 @@
     "electron-builder": "^26.0.12"
   },
   "build": {
+    "productName": "Light Novel Downloader",
+    "icon": "./public/icon.png",
     "files": [
       "main.js",
       "app.js",
